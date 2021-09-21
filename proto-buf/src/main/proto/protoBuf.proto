@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.zupacademy";
+option java_outer_classname = "ProtoBuf";
+option objc_class_prefix = "HLW";
+
+package br.com.zupacademy;
+
+import "google/protobuf/timestamp.proto";
+
+service FretesService {
+
+    rpc send(FretesRequest) returns (FretesResponse) {}
+
+    rpc calculaFrete(CalculaFreteRequest) returns (CalculaFreteResponse) {}
+
+}
+
+message ErroDetails {
+    int32 code = 1;
+    string message = 2;
+}
+
+message FretesRequest {
+    string nome = 1;
+}
+
+message FretesResponse {
+    string message = 1;
+}
+
+message CalculaFreteRequest {
+    string cep = 1;
+}
+
+message CalculaFreteResponse {
+    string valor = 1;
+    string cep = 2;
+}
