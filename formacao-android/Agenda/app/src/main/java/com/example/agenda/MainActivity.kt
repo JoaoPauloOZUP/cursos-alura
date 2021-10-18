@@ -9,6 +9,7 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("ON_CREATE")
         setContentView(R.layout.activity_main)
 
         val listStudents = listOf("Pedro", "Thiago", "Maria", "João")
@@ -25,5 +26,30 @@ class MainActivity : Activity() {
                 listStudents
             )
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        println("ON_START")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("ON_RESUME")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        println("ON_PAUSE")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("ON_STOP")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("ON_DESTROY")
     }
 }
