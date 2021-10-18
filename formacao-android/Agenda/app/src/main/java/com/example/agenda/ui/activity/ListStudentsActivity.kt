@@ -1,27 +1,23 @@
-package com.example.agenda
+package com.example.agenda.ui.activity
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.agenda.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class ListStudentsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Students"
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_list_students)
 
         println("ON_CREATE")
 
-        /**
-         * O this é o contexto da aplicação e neste caso é o lugar onde será exibida listViewStudents.
-         * Já o layout simples_list_item_1 é a view que será inclusa na listViewStudents. Cada students será posta nesta view.
-         * A listStudents é a lista que alimentará a listViewStudents
-         * */
         val listStudents = listOf("Pedro", "Thiago", "Maria", "João")
-        findViewById<ListView>(R.id.activity_main_list_student).let { listViewStudents ->
+        findViewById<ListView>(R.id.activity_list_students_listview).let { listViewStudents ->
             listViewStudents.adapter = ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -29,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        findViewById<FloatingActionButton>(R.id.activity_main_fab_new_student).let { fabNewStudent ->
+        findViewById<FloatingActionButton>(R.id.activity_list_students_fab_new_student).let { fabNewStudent ->
             fabNewStudent.setOnClickListener {
                 println("Cliquei no float button")
             }
