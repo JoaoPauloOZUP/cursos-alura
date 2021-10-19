@@ -73,12 +73,19 @@ class ListStudentsActivity : AppCompatActivity() {
 
     private fun configureFabNewStudent() {
         fabNewStudent.setOnClickListener {
-            startFormStudentActivity()
+            startFormStudentActivityWithExtra()
         }
     }
 
-    private fun startFormStudentActivity() {
+    private fun startFormStudentActivityWithExtra() {
         startActivity(Intent(this, FormStudentActivity::class.java))
+    }
+
+    private fun startFormStudentActivityWithExtra(extra: Student) {
+        startActivity(
+            Intent(this, FormStudentActivity::class.java)
+                .putExtra(Student::javaClass.name, extra)
+        )
     }
 
     private fun initializeListStudents() {
@@ -94,7 +101,9 @@ class ListStudentsActivity : AppCompatActivity() {
         )
 
         listView.setOnItemClickListener { parent, view, position, id ->
-            Log.i("ONITEMCLICKLISTENER", "position: $position ")
+            listStudent[position].run {
+                startFormStudentActivityWithExtra(this)
+            }
         }
     }
 }

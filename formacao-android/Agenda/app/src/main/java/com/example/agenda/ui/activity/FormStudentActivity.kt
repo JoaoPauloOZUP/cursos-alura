@@ -18,9 +18,9 @@ class FormStudentActivity : AppCompatActivity() {
     }
 
     private val studentDao = StudentDAO()
-    private lateinit var name: EditText
-    private lateinit var phone: EditText
-    private lateinit var email: EditText
+    private lateinit var nameField: EditText
+    private lateinit var phoneField: EditText
+    private lateinit var emailField: EditText
     private lateinit var btnSaveStudent: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +29,14 @@ class FormStudentActivity : AppCompatActivity() {
         title = TITLE_APPBAR
         initializeAttributesViews()
         configureButtonSaveStudent()
+        verifyIntent()
     }
 
     private fun createStudent(): Student {
         return Student(
-            name = name.text.toString(),
-            phone = phone.text.toString(),
-            email = email.text.toString()
+            name = nameField.text.toString(),
+            phone = phoneField.text.toString(),
+            email = emailField.text.toString()
         )
     }
 
@@ -46,9 +47,9 @@ class FormStudentActivity : AppCompatActivity() {
     }
 
     private fun initializeAttributesViews() {
-        name = findViewById(R.id.activity_form_students_name)
-        phone = findViewById(R.id.activity_form_students_phone)
-        email = findViewById(R.id.activity_form_students_email)
+        nameField = findViewById(R.id.activity_form_students_name)
+        phoneField = findViewById(R.id.activity_form_students_phone)
+        emailField = findViewById(R.id.activity_form_students_email)
         btnSaveStudent = findViewById(R.id.activity_form_students_btn_save)
     }
 
@@ -56,6 +57,34 @@ class FormStudentActivity : AppCompatActivity() {
         btnSaveStudent.setOnClickListener {
             val student = createStudent()
             saveStudent(student)
+        }
+    }
+
+    private fun verifyIntent() {
+        if(intentIsNotEmpty()) {
+            val student = intent.extras!!.getSerializable(Student::javaClass.name) as Student
+            configureFormForEdit(student)
+        }
+    }
+
+    private fun intentIsNotEmpty(): Boolean {
+
+        if(intent.extras?.isEmpty == null) {
+            return false
+        }
+
+        if(intent.extras!!.isEmpty) {
+            return false
+        }
+
+        return true
+    }
+
+    private fun configureFormForEdit(student: Student) {
+        student.run {
+            nameField.setText(name)
+            phoneField.setText(phone)
+            emailField.setText(email)
         }
     }
 }
