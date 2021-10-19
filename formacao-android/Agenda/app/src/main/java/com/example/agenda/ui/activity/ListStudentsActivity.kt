@@ -2,6 +2,7 @@ package com.example.agenda.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class ListStudentsActivity : AppCompatActivity() {
 
     companion object {
         private const val TITLE_APPBAR = "Students"
+        private const val LYFECICLE = "LYFECICLE"
     }
 
     private val studentDAO = StudentDAO()
@@ -32,12 +34,12 @@ class ListStudentsActivity : AppCompatActivity() {
         initializeAttributesViews()
         configureFabNewStudent()
 
-        println("ON_CREATE")
+        Log.i(LYFECICLE, "onCreate")
     }
 
     override fun onStart() {
         super.onStart()
-        println("ON_START")
+        Log.i(LYFECICLE, "onStart")
     }
 
     override fun onResume() {
@@ -46,22 +48,22 @@ class ListStudentsActivity : AppCompatActivity() {
         initializeAttributesViews()
         configureListStudents()
 
-        println("ON_RESUME")
+        Log.i(LYFECICLE, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        println("ON_PAUSE")
+        Log.i(LYFECICLE, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        println("ON_STOP")
+        Log.i(LYFECICLE, "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        println("ON_DESTROY")
+        Log.i(LYFECICLE, "onDestroy")
     }
 
     private fun initializeAttributesViews() {
@@ -90,5 +92,9 @@ class ListStudentsActivity : AppCompatActivity() {
             android.R.layout.simple_list_item_1,
             listStudent
         )
+
+        listView.setOnItemClickListener { parent, view, position, id ->
+            Log.i("ONITEMCLICKLISTENER", "position: $position ")
+        }
     }
 }
