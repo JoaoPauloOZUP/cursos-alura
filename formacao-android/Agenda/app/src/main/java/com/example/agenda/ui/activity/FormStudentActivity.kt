@@ -32,7 +32,7 @@ class FormStudentActivity : AppCompatActivity() {
             studentDao.save(student)
             Toast.makeText(this, "Novo aluno cadastrado", Toast.LENGTH_SHORT).show()
 
-            startActivity(Intent(this, ListStudentsActivity::class.java))
+            finish()
         }
     }
 }
