@@ -1,6 +1,5 @@
 package com.example.agenda.ui.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -11,28 +10,52 @@ import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
 
 class FormStudentActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TITLE_APPBAR = "New student"
+        private const val CREATED_STUDENT = "Created student"
+        private const val DURATION = Toast.LENGTH_SHORT
+    }
+
+    private val studentDao = StudentDAO()
+    private lateinit var name: EditText
+    private lateinit var phone: EditText
+    private lateinit var email: EditText
+    private lateinit var btnSaveStudent: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_student)
-        title = "New student"
+        title = TITLE_APPBAR
+        initializeAttributesViews()
+        configureButtonSaveStudent()
+    }
 
-        val studentDao = StudentDAO()
-        val name = findViewById<EditText>(R.id.activity_form_students_name)
-        val phone = findViewById<EditText>(R.id.activity_form_students_phone)
-        val email = findViewById<EditText>(R.id.activity_form_students_email)
-        val btnSaveStudent = findViewById<Button>(R.id.activity_form_students_btn_save)
+    private fun createStudent(): Student {
+        return Student(
+            name = name.text.toString(),
+            phone = phone.text.toString(),
+            email = email.text.toString()
+        )
+    }
 
+    private fun saveStudent(student: Student) {
+        studentDao.save(student)
+        Toast.makeText(this, CREATED_STUDENT, DURATION).show()
+        finish()
+    }
+
+    private fun initializeAttributesViews() {
+        name = findViewById(R.id.activity_form_students_name)
+        phone = findViewById(R.id.activity_form_students_phone)
+        email = findViewById(R.id.activity_form_students_email)
+        btnSaveStudent = findViewById(R.id.activity_form_students_btn_save)
+    }
+
+    private fun configureButtonSaveStudent() {
         btnSaveStudent.setOnClickListener {
-            val student = Student(
-                name = name.text.toString(),
-                phone = phone.text.toString(),
-                email = email.text.toString()
-            )
-
-            studentDao.save(student)
-            Toast.makeText(this, "Novo aluno cadastrado", Toast.LENGTH_SHORT).show()
-
-            finish()
+            val student = createStudent()
+            saveStudent(student)
         }
     }
 }
