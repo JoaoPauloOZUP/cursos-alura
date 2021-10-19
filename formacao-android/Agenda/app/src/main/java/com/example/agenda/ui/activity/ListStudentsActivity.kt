@@ -1,10 +1,12 @@
 package com.example.agenda.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
+import com.example.agenda.dao.StudentDAO
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListStudentsActivity : AppCompatActivity() {
@@ -13,22 +15,20 @@ class ListStudentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         title = "Students"
         setContentView(R.layout.activity_list_students)
-
         println("ON_CREATE")
 
-        val listStudents = listOf("Pedro", "Thiago", "Maria", "João")
-        findViewById<ListView>(R.id.activity_list_students_listview).let { listViewStudents ->
-            listViewStudents.adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_list_item_1,
-                listStudents
-            )
-        }
+        val listStudents = StudentDAO().allStudents()
+        val listView = findViewById<ListView>(R.id.activity_list_students_listview)
+        val fabNewStudent = findViewById<FloatingActionButton>(R.id.activity_list_students_fab_new_student)
 
-        findViewById<FloatingActionButton>(R.id.activity_list_students_fab_new_student).let { fabNewStudent ->
-            fabNewStudent.setOnClickListener {
-                println("Cliquei no float button")
-            }
+        listView.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            listStudents
+        )
+
+        fabNewStudent.setOnClickListener {
+            startActivity(Intent(this, FormStudentActivity::class.java))
         }
     }
 
