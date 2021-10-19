@@ -62,7 +62,7 @@ class FormStudentActivity : AppCompatActivity() {
 
     private fun verifyIntent() {
         if(intentIsNotEmpty()) {
-            val student = intent.extras!!.getSerializable(Student::javaClass.name) as Student
+            val student = intent.extras!!.getParcelable<Student>(Student::javaClass.name) as Student
             configureFormForEdit(student)
         }
     }
