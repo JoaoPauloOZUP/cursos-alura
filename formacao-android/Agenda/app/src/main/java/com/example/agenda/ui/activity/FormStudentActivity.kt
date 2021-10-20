@@ -22,6 +22,7 @@ class FormStudentActivity : AppCompatActivity() {
     private lateinit var phoneField: EditText
     private lateinit var emailField: EditText
     private lateinit var btnSaveStudent: Button
+    private var student: Student? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,12 @@ class FormStudentActivity : AppCompatActivity() {
     }
 
     private fun createStudent(): Student {
-        return Student(
+        return student?.apply {
+            name = nameField.text.toString()
+            phone = phoneField.text.toString()
+            email = emailField.text.toString()
+        } ?:
+        Student(
             name = nameField.text.toString(),
             phone = phoneField.text.toString(),
             email = emailField.text.toString()
@@ -62,26 +68,17 @@ class FormStudentActivity : AppCompatActivity() {
 
     private fun verifyIntent() {
         if(intentIsNotEmpty()) {
-            val student = intent.extras!!.getParcelable<Student>(Student::javaClass.name) as Student
+            student = intent.extras!!.getSerializable(Student::javaClass.name) as Student
             configureFormForEdit(student)
         }
     }
 
     private fun intentIsNotEmpty(): Boolean {
-
-        if(intent.extras?.isEmpty == null) {
-            return false
-        }
-
-        if(intent.extras!!.isEmpty) {
-            return false
-        }
-
-        return true
+        return intent.hasExtra(Student::javaClass.name)
     }
 
-    private fun configureFormForEdit(student: Student) {
-        student.run {
+    private fun configureFormForEdit(student: Student?) {
+        student!!.run {
             nameField.setText(name)
             phoneField.setText(phone)
             emailField.setText(email)
