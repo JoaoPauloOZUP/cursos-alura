@@ -3,6 +3,8 @@ package com.example.agenda.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,7 @@ class ListStudentsActivity : AppCompatActivity() {
     companion object {
         private const val TITLE_APPBAR = "Students"
         private const val LYFECICLE = "LYFECICLE"
+        private const val MENU_REMOVE = "Remove"
     }
 
     private val studentDAO = StudentDAO()
@@ -34,6 +37,11 @@ class ListStudentsActivity : AppCompatActivity() {
         configureListStudents()
 
         Log.i(LYFECICLE, "onCreate")
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menu.add(MENU_REMOVE)
     }
 
     override fun onStart() {
@@ -97,6 +105,7 @@ class ListStudentsActivity : AppCompatActivity() {
         listView.adapter = arrayAdapterStudent
         configureOnItemClick()
         configureOnItemLongClick()
+        registerForContextMenu(listView)
     }
 
     private fun configureOnItemClick() {
@@ -111,7 +120,7 @@ class ListStudentsActivity : AppCompatActivity() {
         listView.setOnItemLongClickListener { parent, view, position, id ->
             parent.getItemAtPosition(position).let { student ->
                 removeStudentOnView(student as Student)
-                return@let true
+                return@let false
             }
         }
     }
@@ -125,5 +134,6 @@ class ListStudentsActivity : AppCompatActivity() {
     private fun removeStudentOnView(student: Student) {
         studentDAO.remove(student)
         arrayAdapterStudent.remove(student)
+        arrayAdapterStudent.notifyDataSetChanged()
     }
 }
