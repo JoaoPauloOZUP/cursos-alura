@@ -23,6 +23,7 @@ class ListStudentsActivity : AppCompatActivity() {
     private lateinit var listStudent: List<Student>
     private lateinit var listView: ListView
     private lateinit var fabNewStudent: FloatingActionButton
+    private lateinit var arrayAdapterStudent: ArrayAdapter<Student>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class ListStudentsActivity : AppCompatActivity() {
         title = TITLE_APPBAR
         initializeAttributesViews()
         configureFabNewStudent()
+        configureListStudents()
 
         Log.i(LYFECICLE, "onCreate")
     }
@@ -41,9 +43,7 @@ class ListStudentsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        initializeAttributesViews()
-        configureListStudents()
+        updateStudents()
 
         Log.i(LYFECICLE, "onResume")
     }
@@ -90,13 +90,11 @@ class ListStudentsActivity : AppCompatActivity() {
     }
 
     private fun configureListStudents() {
-        initializeListStudents()
-        listView.adapter = ArrayAdapter(
+        arrayAdapterStudent = ArrayAdapter(
             this,
-            android.R.layout.simple_list_item_1,
-            listStudent
+            android.R.layout.simple_list_item_1
         )
-
+        listView.adapter = arrayAdapterStudent
         configureOnItemClick()
         configureOnItemLongClick()
     }
@@ -112,9 +110,20 @@ class ListStudentsActivity : AppCompatActivity() {
     private fun configureOnItemLongClick() {
         listView.setOnItemLongClickListener { parent, view, position, id ->
             parent.getItemAtPosition(position).let { student ->
-                studentDAO.remove(student as Student)
+                removeStudentOnView(student as Student)
                 return@let true
             }
         }
+    }
+
+    private fun updateStudents() {
+        initializeListStudents()
+        arrayAdapterStudent.clear()
+        arrayAdapterStudent.addAll(listStudent)
+    }
+
+    private fun removeStudentOnView(student: Student) {
+        studentDAO.remove(student)
+        arrayAdapterStudent.remove(student)
     }
 }
