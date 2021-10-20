@@ -24,7 +24,7 @@ class StudentDAO {
     }
 
     fun save(student: Student) {
-        if(student.isEntity()) {
+        if (student.isEntity()) {
             edit(student)
         } else {
             student.apply {
@@ -43,17 +43,27 @@ class StudentDAO {
         found?.let { foundStudent ->
             val indice = listStudent.indexOf(foundStudent)
             listStudent[indice] = student
-        } ?:
-        Toast.makeText(ListStudentsActivity(), STUDENT_NOTFOUND, ConstSharedActivities.DURATION_TOAST).show()
+        } ?: toast(STUDENT_NOTFOUND)
     }
 
     private fun findStudent(student: Student): Student? {
         var foundStudent: Student? = null
         listStudent.forEach {
-            if(it.id == student.id) {
+            if (it.id == student.id) {
                 foundStudent = it
             }
         }
         return foundStudent
+    }
+
+    fun remove(student: Student) {
+        val found = findStudent(student)
+        found?.let { foundStudent ->
+            listStudent.remove(foundStudent)
+        } ?: toast(STUDENT_NOTFOUND)
+    }
+
+    private fun toast(text: String) {
+        Toast.makeText(ListStudentsActivity(), text, ConstSharedActivities.DURATION_TOAST).show()
     }
 }

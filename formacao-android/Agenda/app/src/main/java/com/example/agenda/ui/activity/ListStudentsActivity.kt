@@ -98,12 +98,22 @@ class ListStudentsActivity : AppCompatActivity() {
         )
 
         configureOnItemClick()
+        configureOnItemLongClick()
     }
 
     private fun configureOnItemClick() {
         listView.setOnItemClickListener { parent, view, position, id ->
             parent.getItemAtPosition(position).let { student ->
                 startFormStudentActivityWithExtra(student as Student)
+            }
+        }
+    }
+
+    private fun configureOnItemLongClick() {
+        listView.setOnItemLongClickListener { parent, view, position, id ->
+            parent.getItemAtPosition(position).let { student ->
+                studentDAO.remove(student as Student)
+                return@let true
             }
         }
     }
