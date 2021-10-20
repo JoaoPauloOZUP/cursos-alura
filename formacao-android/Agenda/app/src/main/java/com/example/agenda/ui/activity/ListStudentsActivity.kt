@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
+import com.example.agenda.ui.util.ConstSharedActivities
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListStudentsActivity : AppCompatActivity() {
-    
-    // Pq uma activity pode se perder no estado de onStop?
-    // Ate que ponto variaveis de escopo globais sao okay?
 
     companion object {
         private const val TITLE_APPBAR = "Students"
@@ -30,7 +28,6 @@ class ListStudentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_students)
         title = TITLE_APPBAR
-
         initializeAttributesViews()
         configureFabNewStudent()
 
@@ -73,18 +70,18 @@ class ListStudentsActivity : AppCompatActivity() {
 
     private fun configureFabNewStudent() {
         fabNewStudent.setOnClickListener {
-            startFormStudentActivityWithExtra()
+            startFormStudentActivity()
         }
     }
 
-    private fun startFormStudentActivityWithExtra() {
-        startActivity(Intent(this, FormStudentActivity::class.java))
+    private fun startFormStudentActivity() {
+        startActivity(Intent(this, FormCreateStudentActivity::class.java))
     }
 
     private fun startFormStudentActivityWithExtra(extra: Student) {
         startActivity(
-            Intent(this, FormStudentActivity::class.java)
-                .putExtra(Student::javaClass.name, extra)
+            Intent(this, FormEditStudentActivity::class.java)
+                .putExtra(ConstSharedActivities.EXTRA_STUDENT, extra)
         )
     }
 
@@ -100,9 +97,13 @@ class ListStudentsActivity : AppCompatActivity() {
             listStudent
         )
 
+        configureOnItemClick()
+    }
+
+    private fun configureOnItemClick() {
         listView.setOnItemClickListener { parent, view, position, id ->
-            listStudent[position].run {
-                startFormStudentActivityWithExtra(this)
+            parent.getItemAtPosition(position).let { student ->
+                startFormStudentActivityWithExtra(student as Student)
             }
         }
     }

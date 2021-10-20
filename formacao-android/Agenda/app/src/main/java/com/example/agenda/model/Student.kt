@@ -13,4 +13,8 @@ data class Student(
     override fun toString(): String {
         return name
     }
+
+    fun isEntity(): Boolean {
+        return id?.let { it > 0 } ?: false
+    }
 }

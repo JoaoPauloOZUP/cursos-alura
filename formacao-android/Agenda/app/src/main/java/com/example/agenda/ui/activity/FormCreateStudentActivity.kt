@@ -8,13 +8,13 @@ import android.widget.Toast
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
+import com.example.agenda.ui.util.ConstSharedActivities
 
-class FormStudentActivity : AppCompatActivity() {
+class FormCreateStudentActivity : AppCompatActivity() {
 
     companion object {
         private const val TITLE_APPBAR = "New student"
         private const val CREATED_STUDENT = "Created student"
-        private const val DURATION = Toast.LENGTH_SHORT
     }
 
     private val studentDao = StudentDAO()
@@ -22,7 +22,6 @@ class FormStudentActivity : AppCompatActivity() {
     private lateinit var phoneField: EditText
     private lateinit var emailField: EditText
     private lateinit var btnSaveStudent: Button
-    private var student: Student? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +29,10 @@ class FormStudentActivity : AppCompatActivity() {
         title = TITLE_APPBAR
         initializeAttributesViews()
         configureButtonSaveStudent()
-        verifyIntent()
     }
 
     private fun createStudent(): Student {
-        return student?.apply {
-            name = nameField.text.toString()
-            phone = phoneField.text.toString()
-            email = emailField.text.toString()
-        } ?:
-        Student(
+        return Student(
             name = nameField.text.toString(),
             phone = phoneField.text.toString(),
             email = emailField.text.toString()
@@ -48,7 +41,7 @@ class FormStudentActivity : AppCompatActivity() {
 
     private fun saveStudent(student: Student) {
         studentDao.save(student)
-        Toast.makeText(this, CREATED_STUDENT, DURATION).show()
+        Toast.makeText(this, CREATED_STUDENT, ConstSharedActivities.DURATION_TOAST).show()
         finish()
     }
 
@@ -63,25 +56,6 @@ class FormStudentActivity : AppCompatActivity() {
         btnSaveStudent.setOnClickListener {
             val student = createStudent()
             saveStudent(student)
-        }
-    }
-
-    private fun verifyIntent() {
-        if(intentIsNotEmpty()) {
-            student = intent.extras!!.getSerializable(Student::javaClass.name) as Student
-            configureFormForEdit(student)
-        }
-    }
-
-    private fun intentIsNotEmpty(): Boolean {
-        return intent.hasExtra(Student::javaClass.name)
-    }
-
-    private fun configureFormForEdit(student: Student?) {
-        student!!.run {
-            nameField.setText(name)
-            phoneField.setText(phone)
-            emailField.setText(email)
         }
     }
 }

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Agenda">
-        <activity android:name=".ui.activity.FormStudentActivity" />
+        <activity android:name=".ui.activity.FormCreateStudentActivity" />
+        <activity android:name=".ui.activity.FormEditStudentActivity" />
         <activity
             android:name=".ui.activity.ListStudentsActivity"
             android:exported="true">
