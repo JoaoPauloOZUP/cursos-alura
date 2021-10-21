@@ -3,7 +3,7 @@ package com.example.agenda.dao
 import android.widget.Toast
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.ListStudentsActivity
-import com.example.agenda.ui.util.ConstSharedActivities
+import com.example.agenda.ui.activity.util.ConstSharedActivities
 
 class StudentDAO {
 

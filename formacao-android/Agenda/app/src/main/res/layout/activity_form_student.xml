@@ -118,12 +118,12 @@
             android:hint="E-mail"
             android:inputType="textEmailAddress"/>
 
-        <Button
-            android:id="@+id/activity_form_students_btn_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Save" />
+<!--        <Button-->
+<!--            android:id="@+id/activity_form_students_btn_save"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:text="Save" />-->
 
     </LinearLayout>
 </ScrollView>

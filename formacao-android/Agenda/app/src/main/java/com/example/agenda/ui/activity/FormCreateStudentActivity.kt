@@ -2,13 +2,16 @@ package com.example.agenda.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
-import com.example.agenda.ui.util.ConstSharedActivities
+import com.example.agenda.ui.activity.util.ConstSharedActivities
+import com.example.agenda.ui.activity.util.FilterOptionMenu
 
 class FormCreateStudentActivity : AppCompatActivity() {
 
@@ -28,7 +31,22 @@ class FormCreateStudentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_form_student)
         title = TITLE_APPBAR
         initializeAttributesViews()
-        configureButtonSaveStudent()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_form_student_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val titleOptionMenu = item.title as String
+        FilterOptionMenu
+            .valueOf(titleOptionMenu.uppercase())
+            .action(createStudent(), studentDao)
+
+        Toast.makeText(this, CREATED_STUDENT, ConstSharedActivities.DURATION_TOAST).show()
+        finish()
+        return super.onOptionsItemSelected(item)
     }
 
     private fun createStudent(): Student {
@@ -39,23 +57,9 @@ class FormCreateStudentActivity : AppCompatActivity() {
         )
     }
 
-    private fun saveStudent(student: Student) {
-        studentDao.save(student)
-        Toast.makeText(this, CREATED_STUDENT, ConstSharedActivities.DURATION_TOAST).show()
-        finish()
-    }
-
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
         phoneField = findViewById(R.id.activity_form_students_phone)
         emailField = findViewById(R.id.activity_form_students_email)
-        btnSaveStudent = findViewById(R.id.activity_form_students_btn_save)
-    }
-
-    private fun configureButtonSaveStudent() {
-        btnSaveStudent.setOnClickListener {
-            val student = createStudent()
-            saveStudent(student)
-        }
     }
 }

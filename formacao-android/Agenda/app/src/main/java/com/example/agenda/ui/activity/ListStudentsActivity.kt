@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
-import com.example.agenda.ui.util.ConstSharedActivities
+import com.example.agenda.ui.activity.util.ConstSharedActivities
+import com.example.agenda.ui.activity.util.FilterContextMenu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListStudentsActivity : AppCompatActivity() {
@@ -51,7 +52,8 @@ class ListStudentsActivity : AppCompatActivity() {
         val menuTitle = item.title as String
 
         arrayAdapterStudent.getItem(menu.position).let { studentSelected ->
-            FilterContextMenu.valueOf(menuTitle.uppercase())
+            FilterContextMenu
+                .valueOf(menuTitle.uppercase())
                 .action(studentSelected as Student, studentDAO, arrayAdapterStudent)
         }
 
@@ -141,25 +143,4 @@ class ListStudentsActivity : AppCompatActivity() {
         arrayAdapterStudent.clear()
         arrayAdapterStudent.addAll(listStudent)
     }
-}
-
-enum class FilterContextMenu {
-    REMOVE {
-        override fun action(
-            student: Student,
-            studentDAO: StudentDAO,
-            arrayAdapterStudent: ArrayAdapter<Student>
-        ) {
-            studentDAO.remove(student)
-            arrayAdapterStudent.remove(student)
-            arrayAdapterStudent.notifyDataSetChanged()
-        }
-    },
-    ;
-
-    abstract fun action(
-        student: Student,
-        studentDAO: StudentDAO,
-        arrayAdapterStudent: ArrayAdapter<Student>
-    )
 }
