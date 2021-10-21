@@ -21,7 +21,6 @@ class ListStudentsActivity : AppCompatActivity() {
     companion object {
         private const val TITLE_APPBAR = "Students"
         private const val LYFECICLE = "LYFECICLE"
-        private const val MENU_REMOVE = "Remove"
     }
 
     private val studentDAO = StudentDAO()
@@ -49,9 +48,13 @@ class ListStudentsActivity : AppCompatActivity() {
     // Para cada menu de contexto for clicada sera chamado este evento
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val menu = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val menuTitle = item.title as String
+
         arrayAdapterStudent.getItem(menu.position).let { studentSelected ->
-            removeStudentOnView(studentSelected as Student)
+            FilterContextMenu.valueOf(menuTitle.uppercase())
+                .action(studentSelected as Student, studentDAO, arrayAdapterStudent)
         }
+
         return super.onContextItemSelected(item)
     }
 
@@ -129,10 +132,6 @@ class ListStudentsActivity : AppCompatActivity() {
 
     private fun configureOnItemLongClick() {
         listView.setOnItemLongClickListener { parent, view, position, id ->
-//            parent.getItemAtPosition(position).let { student ->
-//                removeStudentOnView(student as Student)
-//                return@let false
-//            }
             return@setOnItemLongClickListener false
         }
     }
@@ -142,10 +141,25 @@ class ListStudentsActivity : AppCompatActivity() {
         arrayAdapterStudent.clear()
         arrayAdapterStudent.addAll(listStudent)
     }
+}
 
-    private fun removeStudentOnView(student: Student) {
-        studentDAO.remove(student)
-        arrayAdapterStudent.remove(student)
-        arrayAdapterStudent.notifyDataSetChanged()
-    }
+enum class FilterContextMenu {
+    REMOVE {
+        override fun action(
+            student: Student,
+            studentDAO: StudentDAO,
+            arrayAdapterStudent: ArrayAdapter<Student>
+        ) {
+            studentDAO.remove(student)
+            arrayAdapterStudent.remove(student)
+            arrayAdapterStudent.notifyDataSetChanged()
+        }
+    },
+    ;
+
+    abstract fun action(
+        student: Student,
+        studentDAO: StudentDAO,
+        arrayAdapterStudent: ArrayAdapter<Student>
+    )
 }
