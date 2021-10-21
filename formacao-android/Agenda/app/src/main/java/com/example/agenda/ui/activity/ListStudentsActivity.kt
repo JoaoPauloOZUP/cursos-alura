@@ -43,7 +43,7 @@ class ListStudentsActivity : AppCompatActivity() {
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menu.add(MENU_REMOVE)
+        menuInflater.inflate(R.menu.activity_list_student_menu, menu)
     }
 
     // Para cada menu de contexto for clicada sera chamado este evento
