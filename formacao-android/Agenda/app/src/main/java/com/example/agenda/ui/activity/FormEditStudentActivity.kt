@@ -24,7 +24,6 @@ class FormEditStudentActivity : AppCompatActivity() {
     private lateinit var nameField: EditText
     private lateinit var phoneField: EditText
     private lateinit var emailField: EditText
-    private lateinit var btnSaveStudent: Button
     private var student: Student? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

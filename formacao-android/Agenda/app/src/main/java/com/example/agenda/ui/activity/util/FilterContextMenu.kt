@@ -1,19 +1,19 @@
 package com.example.agenda.ui.activity.util
 
-import android.widget.ArrayAdapter
+
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
+import com.example.agenda.ui.activity.adapter.StudentCustomAdapter
 
 enum class FilterContextMenu {
     REMOVE {
         override fun action(
             student: Student,
             studentDAO: StudentDAO,
-            arrayAdapterStudent: ArrayAdapter<Student>
+            studentCustomAdapter: StudentCustomAdapter
         ) {
             studentDAO.remove(student)
-            arrayAdapterStudent.remove(student)
-            arrayAdapterStudent.notifyDataSetChanged()
+            studentCustomAdapter.remove(student)
         }
     },
     ;
@@ -21,6 +21,6 @@ enum class FilterContextMenu {
     abstract fun action(
         student: Student,
         studentDAO: StudentDAO,
-        arrayAdapterStudent: ArrayAdapter<Student>
+        studentCustomAdapter: StudentCustomAdapter
     )
 }

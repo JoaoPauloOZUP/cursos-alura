@@ -7,13 +7,13 @@ import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.util.ConstSharedActivities
+import com.example.agenda.ui.activity.adapter.StudentCustomAdapter
 import com.example.agenda.ui.activity.util.FilterContextMenu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -28,7 +28,7 @@ class ListStudentsActivity : AppCompatActivity() {
     private lateinit var listStudent: List<Student>
     private lateinit var listView: ListView
     private lateinit var fabNewStudent: FloatingActionButton
-    private lateinit var arrayAdapterStudent: ArrayAdapter<Student>
+    private lateinit var studentCustomAdapter: StudentCustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +51,10 @@ class ListStudentsActivity : AppCompatActivity() {
         val menu = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val menuTitle = item.title as String
 
-        arrayAdapterStudent.getItem(menu.position).let { studentSelected ->
+        studentCustomAdapter.getItem(menu.position).let { studentSelected ->
             FilterContextMenu
                 .valueOf(menuTitle.uppercase())
-                .action(studentSelected as Student, studentDAO, arrayAdapterStudent)
+                .action(studentSelected as Student, studentDAO, studentCustomAdapter)
         }
 
         return super.onContextItemSelected(item)
@@ -114,11 +114,9 @@ class ListStudentsActivity : AppCompatActivity() {
     }
 
     private fun configureListStudents() {
-        arrayAdapterStudent = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1
-        )
-        listView.adapter = arrayAdapterStudent
+        initializeListStudents()
+        studentCustomAdapter = StudentCustomAdapter(this, listStudent.toMutableList())
+        listView.adapter = studentCustomAdapter
         configureOnItemClick()
         configureOnItemLongClick()
         registerForContextMenu(listView)
@@ -140,7 +138,7 @@ class ListStudentsActivity : AppCompatActivity() {
 
     private fun updateStudents() {
         initializeListStudents()
-        arrayAdapterStudent.clear()
-        arrayAdapterStudent.addAll(listStudent)
+        studentCustomAdapter.clear()
+        studentCustomAdapter.addAll(listStudent)
     }
 }
