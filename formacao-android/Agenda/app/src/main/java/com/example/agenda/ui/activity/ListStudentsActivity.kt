@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +44,15 @@ class ListStudentsActivity : AppCompatActivity() {
     override fun onCreateContextMenu(menu: ContextMenu, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         menu.add(MENU_REMOVE)
+    }
+
+    // Para cada menu de contexto for clicada sera chamado este evento
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val menu = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        arrayAdapterStudent.getItem(menu.position).let { studentSelected ->
+            removeStudentOnView(studentSelected as Student)
+        }
+        return super.onContextItemSelected(item)
     }
 
     override fun onStart() {
@@ -118,10 +129,11 @@ class ListStudentsActivity : AppCompatActivity() {
 
     private fun configureOnItemLongClick() {
         listView.setOnItemLongClickListener { parent, view, position, id ->
-            parent.getItemAtPosition(position).let { student ->
-                removeStudentOnView(student as Student)
-                return@let false
-            }
+//            parent.getItemAtPosition(position).let { student ->
+//                removeStudentOnView(student as Student)
+//                return@let false
+//            }
+            return@setOnItemLongClickListener false
         }
     }
 
