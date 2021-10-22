@@ -54,7 +54,7 @@ class ListStudentsActivity : AppCompatActivity() {
         studentCustomAdapter.getItem(menu.position).let { studentSelected ->
             FilterContextMenu
                 .valueOf(menuTitle.uppercase())
-                .action(studentSelected as Student, studentDAO, studentCustomAdapter, this)
+                .action(studentSelected, studentDAO, studentCustomAdapter, this)
         }
 
         return super.onContextItemSelected(item)

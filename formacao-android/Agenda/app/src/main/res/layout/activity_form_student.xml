@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/name"
-            android:inputType="textCapWords"/>
+            android:inputType="textCapWords"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/activity_form_students_phone"
@@ -24,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/phone"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/activity_form_students_email"
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="no" />
     </LinearLayout>
 </ScrollView>
