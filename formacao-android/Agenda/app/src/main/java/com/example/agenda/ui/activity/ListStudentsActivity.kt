@@ -138,7 +138,6 @@ class ListStudentsActivity : AppCompatActivity() {
 
     private fun updateStudents() {
         initializeListStudents()
-        studentCustomAdapter.clear()
-        studentCustomAdapter.addAll(listStudent)
+        studentCustomAdapter.update(listStudent)
     }
 }
