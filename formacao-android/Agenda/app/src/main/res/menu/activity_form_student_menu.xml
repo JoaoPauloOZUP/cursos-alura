@@ -6,5 +6,5 @@
         android:id="@+id/activity_form_student_menu"
         android:icon="@drawable/ic_action_save_student"
         app:showAsAction="always"
-        android:title="Save" />
+        android:title="@string/save" />
 </menu>
