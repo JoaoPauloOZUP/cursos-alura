@@ -18,7 +18,7 @@ class StudentCustomAdapter(
         return list.count()
     }
 
-    override fun getItem(position: Int): Student? {
+    override fun getItem(position: Int): Student {
         return list[position]
     }
 
