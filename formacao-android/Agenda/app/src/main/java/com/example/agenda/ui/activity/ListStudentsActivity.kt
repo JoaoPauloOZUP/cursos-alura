@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
-import com.example.agenda.ui.activity.util.ConstSharedActivities
 import com.example.agenda.ui.activity.adapter.StudentCustomAdapter
+import com.example.agenda.ui.activity.util.ConstSharedActivities
 import com.example.agenda.ui.activity.util.FilterContextMenu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -54,7 +54,7 @@ class ListStudentsActivity : AppCompatActivity() {
         studentCustomAdapter.getItem(menu.position).let { studentSelected ->
             FilterContextMenu
                 .valueOf(menuTitle.uppercase())
-                .action(studentSelected as Student, studentDAO, studentCustomAdapter)
+                .action(studentSelected as Student, studentDAO, studentCustomAdapter, this)
         }
 
         return super.onContextItemSelected(item)
