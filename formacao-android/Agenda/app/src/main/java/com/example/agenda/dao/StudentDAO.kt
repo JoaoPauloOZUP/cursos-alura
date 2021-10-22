@@ -10,17 +10,7 @@ class StudentDAO {
     companion object {
         private const val STUDENT_NOTFOUND = "Student Not Found"
         private var GENERATED_ID = 0L
-        private val listStudent: MutableList<Student> = mutableListOf(
-            Student("Joao", "199999999", "joao@mail.com").apply {
-                id = ++GENERATED_ID
-            },
-            Student("Giovana", "1999999", "gio@mail.com").apply {
-                id = ++GENERATED_ID
-            },
-            Student("Kiara", "1099000", "ki@mail.com").apply {
-                id = ++GENERATED_ID
-            }
-        )
+        private val listStudent: MutableList<Student> = mutableListOf()
     }
 
     fun save(student: Student) {

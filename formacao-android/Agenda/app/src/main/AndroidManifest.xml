@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Agenda">
+        android:theme="@style/Theme.Agenda"
+        android:name=".ScheduleApplication">
         <activity android:name=".ui.activity.FormCreateStudentActivity" />
         <activity android:name=".ui.activity.FormEditStudentActivity" />
         <activity
