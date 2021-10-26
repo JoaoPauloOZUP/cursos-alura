@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PraticaScheduleStudent</string>
+    <string name="add_student">Add Student</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="save">Save</string>
+    <string name="remove">Remove</string>
+</resources>
