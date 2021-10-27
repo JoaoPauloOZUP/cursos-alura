@@ -20,7 +20,7 @@ class ViewHolder(
         private set
 
     init {
-        localNameView = view.findViewById(R.id.item_travel_package_localname)
+        localNameView = view.findViewById(R.id.list_package_special)
         localImageView = view.findViewById(R.id.item_travel_package_localimage)
         daysView = view.findViewById(R.id.item_travel_package_days)
         priceView = view.findViewById(R.id.item_travel_package_price)

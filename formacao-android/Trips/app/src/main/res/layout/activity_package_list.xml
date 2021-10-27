@@ -7,31 +7,32 @@
     tools:context=".ui.activity.PackageListActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/list_package_banner"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:background="@color/purple_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/banner_of_packages"/>
 
     <TextView
-        android:id="@+id/item_travel_package_localname"
+        android:id="@+id/list_package_special"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="@string/specials"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/list_package_banner"
+        app:layout_constraintEnd_toEndOf="@id/list_package_banner"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/list_package_banner"
+        app:layout_constraintTop_toTopOf="@id/list_package_banner"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/list_package_country_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -39,20 +40,20 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/item_travel_package_localname"
-        app:layout_constraintTop_toBottomOf="@+id/item_travel_package_localname" />
+        app:layout_constraintStart_toStartOf="@+id/list_package_special"
+        app:layout_constraintTop_toBottomOf="@+id/list_package_special" />
 
     <ListView
         android:id="@+id/list_travels_package"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-        tools:listitem="@layout/item_travels_package" />
+        app:layout_constraintTop_toBottomOf="@id/list_package_banner"
+        tools:listitem="@layout/item_travels_package"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
