@@ -10,4 +10,5 @@
     <string name="purchase_amount">Purchase amount:</string>
     <string name="card_number">Card number</string>
     <string name="purchase_finish">Purchase finish</string>
+    <string name="mask_card_name">abcdefghijklmnopqrstuvwxyvABCDEFGHIJKLMNOPQRTUWXYZ\u0020</string>
 </resources>

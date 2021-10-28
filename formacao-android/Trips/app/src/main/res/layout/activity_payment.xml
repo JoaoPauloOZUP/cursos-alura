@@ -29,6 +29,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/purchase_amount"
         app:layout_constraintTop_toBottomOf="@id/payment_information"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,37 +52,39 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:hint="@string/card_number"
         android:inputType="number"
         android:maxLength="12"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/payment_purchase_price"
-        android:hint="@string/card_number"
-        />
+        app:layout_constraintTop_toBottomOf="@id/payment_purchase_price" />
 
     <EditText
         android:id="@+id/payment_card_month"
-        android:layout_width="40dp"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:hint="MM"
         android:inputType="number"
         android:maxLength="2"
+        android:minHeight="48dp"
         android:textAlignment="center"
-        android:hint="MM"
-        app:layout_constraintTop_toBottomOf="@+id/payment_card_number"
         app:layout_constraintStart_toStartOf="@id/payment_card_number"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/payment_card_number" />
 
     <EditText
         android:id="@+id/payment_card_year"
-        android:layout_width="40dp"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:hint="AA"
         android:inputType="number"
         android:maxLength="2"
+        android:minHeight="48dp"
         android:textAlignment="center"
-        android:hint="AA"
         app:layout_constraintBottom_toBottomOf="@+id/payment_card_month"
-        app:layout_constraintStart_toEndOf="@id/payment_card_month"
-        android:gravity="center_horizontal" />
+        app:layout_constraintStart_toEndOf="@id/payment_card_month" />
     <EditText
         android:id="@+id/payment_card_cvc"
         android:layout_width="wrap_content"
@@ -104,10 +107,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:digits="@string/mask_card_name"
         android:gravity="start"
         android:hint="Name in card"
-        android:digits="abcdefghijklmnopqrstuvwxyvABCDEFGHIJKLMNOPQRTUWXYZ "
         android:inputType="textCapWords"
+        android:minHeight="48dp"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,8 +125,8 @@
         android:background="@drawable/button_radius_orange"
         android:text="@string/purchase_finish"
         app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/payment_card_name"
+        app:layout_constraintStart_toStartOf="@id/payment_card_name"
         app:layout_constraintTop_toBottomOf="@id/payment_card_name" />
 
 

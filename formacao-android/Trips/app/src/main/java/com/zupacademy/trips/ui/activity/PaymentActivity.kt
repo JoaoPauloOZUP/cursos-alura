@@ -2,6 +2,7 @@ package com.zupacademy.trips.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.zupacademy.trips.R
 
 class PaymentActivity : AppCompatActivity() {
@@ -14,5 +15,12 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
         title = TITLE_APPBAR
+        dataBindOnViewPrice()
+    }
+
+    private fun dataBindOnViewPrice() {
+        findViewById<TextView>(R.id.payment_purchase_price).let { purchasePrice ->
+            purchasePrice.text = "243,99"
+        }
     }
 }
