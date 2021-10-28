@@ -13,6 +13,10 @@ import java.math.BigDecimal
 
 class TravelPackageSummary : AppCompatActivity() {
 
+    companion object {
+        private const val TITLE_APPBAR = "Summary package"
+    }
+
     lateinit var localNameView: TextView
     lateinit var localImageView: ImageView
     lateinit var daysView: TextView
@@ -21,6 +25,7 @@ class TravelPackageSummary : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_package_summary)
+        title = TITLE_APPBAR
         initializeAttributes()
     }
 

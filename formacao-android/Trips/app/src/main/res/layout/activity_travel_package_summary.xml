@@ -10,73 +10,72 @@
         android:id="@+id/summary_localImage"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         android:scaleType="centerCrop"
-        tools:src="@drawable/salvador_ba"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@drawable/salvador_ba" />
 
     <TextView
         android:id="@+id/summary_localName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/summary_localImage"
         android:layout_margin="8dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:text="@sample/packages.json/packages/local"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/summary_localImage"
+        tools:text="@sample/packages.json/packages/local" />
 
     <TextView
         android:id="@+id/summary_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/summary_localName"
-        app:layout_constraintTop_toBottomOf="@id/summary_localName"
         android:layout_marginTop="8dp"
         android:textSize="16sp"
-        tools:text="@sample/packages.json/packages/days"
-        />
+        app:layout_constraintStart_toStartOf="@id/summary_localName"
+        app:layout_constraintTop_toBottomOf="@id/summary_localName"
+        tools:text="@sample/packages.json/packages/days" />
 
     <TextView
         android:id="@+id/summary_stay"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/summary_days"
-        app:layout_constraintTop_toBottomOf="@id/summary_days"
         android:layout_marginTop="8dp"
         android:textSize="14sp"
-        tools:text="08/12 - 10/12 de 2021"
-        />
+        app:layout_constraintEnd_toStartOf="@id/summary_price"
+        app:layout_constraintStart_toStartOf="@id/summary_days"
+        app:layout_constraintTop_toBottomOf="@id/summary_days"
+        tools:text="08/12 - 10/12 de 2021" />
 
     <TextView
         android:id="@+id/summary_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:gravity="end"
+        android:textAlignment="textEnd"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/summary_stay"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/summary_stay"
         tools:text="@sample/packages.json/packages/price" />
 
     <TextView
         android:id="@+id/summary_price_actual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/summary_price"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="3dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:textSize="14sp"
+        android:layout_marginBottom="3dp"
         android:text="@string/actual_price"
-        />
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/summary_price"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/summary_make_payment"
