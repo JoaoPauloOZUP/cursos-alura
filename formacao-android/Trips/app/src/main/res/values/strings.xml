@@ -5,4 +5,5 @@
     <string name="banner_of_packages">Banner of packages</string>
     <string name="make_payment">MAKE PAYMENT</string>
     <string name="actual_price">Current price:</string>
+    <string name="local_image">Local image</string>
 </resources>
