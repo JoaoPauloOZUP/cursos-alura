@@ -6,4 +6,8 @@
     <string name="make_payment">MAKE PAYMENT</string>
     <string name="actual_price">Current price:</string>
     <string name="local_image">Local image</string>
+    <string name="text_information_payment">Enter the information of the credit card you want to use for payment</string>
+    <string name="purchase_amount">Purchase amount:</string>
+    <string name="card_number">Card number</string>
+    <string name="purchase_finish">Purchase finish</string>
 </resources>
