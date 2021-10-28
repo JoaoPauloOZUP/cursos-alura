@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Trips">
         <activity
+            android:name=".ui.activity.TravelPackageSummary"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.PackageListActivity"
             android:exported="true">
             <intent-filter>

@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.zupacademy.trips.R
 
 // Por que utilizar ViewHolder?
-class ViewHolder(
+class ViewHolderPackageList(
     view: View
 ) {
 

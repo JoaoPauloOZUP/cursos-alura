@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.zupacademy.trips.R
 import com.zupacademy.trips.model.TravelPackage
-import com.zupacademy.trips.ui.activity.holder.ViewHolder
+import com.zupacademy.trips.ui.activity.holder.ViewHolderPackageList
+import com.zupacademy.trips.util.formatDayOnView
+import com.zupacademy.trips.util.formatPriceOnView
+import com.zupacademy.trips.util.getDrawableImage
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
 
-class ListPackageAdapter(
+class PackageListAdapter(
     private val context: Context,
     private val list: MutableList<TravelPackage>
 ) : BaseAdapter() {
@@ -39,7 +42,7 @@ class ListPackageAdapter(
             ?: LayoutInflater.from(context)
                 .inflate(R.layout.item_travels_package, parent, false)
 
-        val holder = ViewHolder(view)
+        val holder = ViewHolderPackageList(view)
         val travelPackage = packageDAO.getPackage(position)
         dataBindOnView(holder, travelPackage)
 
@@ -47,29 +50,11 @@ class ListPackageAdapter(
         return view
     }
 
-    private fun dataBindOnView(holder: ViewHolder, travelPackage: TravelPackage) {
-        holder.localNameView.text = travelPackage.local
-        holder.daysView.text = formatDayOnView(travelPackage.days)
-        holder.priceView.text = formatPriceOnView(travelPackage.price)
-        val drawableImagePackage = getDrawableImage(travelPackage)
-        holder.localImageView.setImageDrawable(drawableImagePackage)
-    }
-
-    private fun getDrawableImage(travelPackage: TravelPackage): Drawable {
-        var resources: Resources = context.resources
-        val identifierDrawable = resources.getIdentifier(travelPackage.image, "drawable", context.packageName)
-        return resources.getDrawable(identifierDrawable)
-    }
-
-    private fun formatDayOnView(day: Int): String {
-        return day
-            .takeIf { it == 1 }
-            ?.let { return@let "$it day" }
-            ?: "$day days"
-    }
-
-    private fun formatPriceOnView(price: BigDecimal): String {
-        val priceFormat = DecimalFormat.getCurrencyInstance(Locale("pt", "br"))
-        return priceFormat.format(price).replace("R$", "R$ ")
+    private fun dataBindOnView(holderPackageList: ViewHolderPackageList, travelPackage: TravelPackage) {
+        holderPackageList.localNameView.text = travelPackage.local
+        holderPackageList.daysView.text = formatDayOnView(travelPackage.days)
+        holderPackageList.priceView.text = formatPriceOnView(travelPackage.price)
+        val drawableImagePackage = getDrawableImage(context, travelPackage)
+        holderPackageList.localImageView.setImageDrawable(drawableImagePackage)
     }
 }

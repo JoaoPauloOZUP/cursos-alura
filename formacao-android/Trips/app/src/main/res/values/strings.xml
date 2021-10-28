@@ -3,4 +3,6 @@
     <string name="specials">Specials</string>
     <string name="brasil">Brasil</string>
     <string name="banner_of_packages">Banner of packages</string>
+    <string name="make_payment">MAKE PAYMENT</string>
+    <string name="actual_price">Current price:</string>
 </resources>
