@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.PurchaseSummaryActivity">
+
+    <ImageView
+        android:id="@+id/purchase_banner"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@android:color/holo_orange_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/purchase_congratulation_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Congratulations!"
+        android:layout_margin="8dp"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/purchase_banner"
+        app:layout_constraintTop_toTopOf="@+id/purchase_banner"
+        app:layout_constraintEnd_toEndOf="@id/purchase_banner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="successful purchase"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/purchase_congratulation_text"
+        app:layout_constraintTop_toBottomOf="@id/purchase_congratulation_text"
+        app:layout_constraintEnd_toEndOf="@id/purchase_congratulation_text" />
+
+    <TextView
+        android:id="@+id/purchase_summary_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check the purchase summary"
+        android:textSize="14sp"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/purchase_banner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/purchase_localimage"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="8dp"
+        tools:src="@sample/packages.json/packages/image"
+        app:layout_constraintTop_toBottomOf="@+id/purchase_summary_confirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/purchase_localname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        tools:text="@sample/packages.json/packages/local"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/purchase_localimage"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/purchase_stay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        tools:text="08/12 - 10/12 de 2021"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/purchase_localname"
+        app:layout_constraintStart_toStartOf="@id/purchase_localname" />
+
+    <TextView
+        android:id="@+id/purchase_current_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        tools:text="R$ 243,99"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/purchase_stay"
+        app:layout_constraintStart_toStartOf="@id/purchase_stay" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

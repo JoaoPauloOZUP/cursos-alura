@@ -18,8 +18,12 @@ class PackageListActivity : AppCompatActivity() {
         }
 
         startActivity(
-            Intent(this, PaymentActivity::class.java)
+            Intent(this, PurchaseSummaryActivity::class.java)
         )
+
+//        startActivity(
+//            Intent(this, PaymentActivity::class.java)
+//        )
 
 //        startActivity(
 //            Intent(this, TravelPackageSummary::class.java)
