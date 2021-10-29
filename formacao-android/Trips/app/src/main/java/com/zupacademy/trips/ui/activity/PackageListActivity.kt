@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.zupacademy.trips.R
+import com.zupacademy.trips.model.TravelPackage
 import com.zupacademy.trips.ui.activity.adapter.PackageListAdapter
 
 class PackageListActivity : AppCompatActivity() {
@@ -36,8 +37,10 @@ class PackageListActivity : AppCompatActivity() {
 
     private fun configureOnItemClickListener() {
         listView.setOnItemClickListener { parent, view, position, id ->
+            val travelPackageClicked = dao.getPackage(position)
             startActivity(
                 Intent(this, TravelPackageSummary::class.java)
+                    .putExtra(TravelPackage::javaClass.name, travelPackageClicked)
             )
         }
     }

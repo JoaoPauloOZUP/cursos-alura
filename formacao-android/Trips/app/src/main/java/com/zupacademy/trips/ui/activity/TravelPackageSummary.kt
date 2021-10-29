@@ -24,6 +24,7 @@ class TravelPackageSummary : AppCompatActivity() {
     lateinit var daysView: TextView
     lateinit var priceView: TextView
     lateinit var btnMakePayment: Button
+    lateinit var travelPackage: TravelPackage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +36,10 @@ class TravelPackageSummary : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        dataBindOnView()
+        verifyIntent()
     }
 
     private fun dataBindOnView() {
-        val travelPackage = TravelPackage(
-            local = "Sao Paulo",
-            image = "sao_paulo_sp",
-            2,
-            BigDecimal(243.99)
-        )
-
         localNameView.text = travelPackage.local
         localImageView.setImageDrawable(getDrawableImage(this, travelPackage))
         daysView.text = formatDayOnView(travelPackage.days)
@@ -64,7 +58,15 @@ class TravelPackageSummary : AppCompatActivity() {
         btnMakePayment.setOnClickListener {
             startActivity(
                 Intent(this, PaymentActivity::class.java)
+                    .putExtra(TravelPackage::javaClass.name, travelPackage)
             )
+        }
+    }
+
+    private fun verifyIntent() {
+        if(intent.hasExtra(TravelPackage::javaClass.name)) {
+            travelPackage = intent.extras!!.getSerializable(TravelPackage::javaClass.name) as TravelPackage
+            dataBindOnView()
         }
     }
 }

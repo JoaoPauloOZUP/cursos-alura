@@ -20,22 +20,21 @@ class PurchaseSummaryActivity : AppCompatActivity() {
     private lateinit var localNameView: TextView
     private lateinit var stayView: TextView
     private lateinit var currentPriceView: TextView
+    private lateinit var travelPackage: TravelPackage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchase_summary)
+        title = TITLE_APPBAR
         initializeAttributes()
-        dataBindOnView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        verifyIntent()
     }
 
     private fun dataBindOnView() {
-        val travelPackage = TravelPackage(
-            local = "Sao Paulo",
-            image = "sao_paulo_sp",
-            2,
-            BigDecimal(243.99)
-        )
-
         imageLocalView.setImageDrawable(getDrawableImage(this, travelPackage))
         localNameView.text = travelPackage.local
         currentPriceView.text = formatPriceOnView(travelPackage.price)
@@ -46,6 +45,13 @@ class PurchaseSummaryActivity : AppCompatActivity() {
         localNameView = findViewById(R.id.purchase_localname)
         stayView = findViewById(R.id.purchase_stay)
         currentPriceView = findViewById(R.id.purchase_current_price)
+    }
+
+    private fun verifyIntent() {
+        if(intent.hasExtra(TravelPackage::javaClass.name)) {
+            travelPackage = intent.extras!!.getSerializable(TravelPackage::javaClass.name) as TravelPackage
+            dataBindOnView()
+        }
     }
 
 }
