@@ -1,7 +1,9 @@
 package com.zupacademy.trips.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.zupacademy.trips.R
@@ -21,12 +23,14 @@ class TravelPackageSummary : AppCompatActivity() {
     lateinit var localImageView: ImageView
     lateinit var daysView: TextView
     lateinit var priceView: TextView
+    lateinit var btnMakePayment: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_package_summary)
         title = TITLE_APPBAR
         initializeAttributes()
+        configureBtnMakePayment()
     }
 
     override fun onResume() {
@@ -53,5 +57,14 @@ class TravelPackageSummary : AppCompatActivity() {
         localImageView = findViewById(R.id.summary_localImage)
         daysView = findViewById(R.id.summary_days)
         priceView = findViewById(R.id.summary_price)
+        btnMakePayment = findViewById(R.id.summary_make_payment)
+    }
+
+    private fun configureBtnMakePayment() {
+        btnMakePayment.setOnClickListener {
+            startActivity(
+                Intent(this, PaymentActivity::class.java)
+            )
+        }
     }
 }
