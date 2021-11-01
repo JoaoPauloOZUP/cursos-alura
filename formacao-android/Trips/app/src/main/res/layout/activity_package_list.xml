@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/list_package_special" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclelist_travels_package"
+        android:id="@+id/recyclerlist_travels_package"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="0dp"
