@@ -47,6 +47,7 @@ class PaymentActivity : AppCompatActivity() {
                 Intent(this, PurchaseSummaryActivity::class.java)
                     .putExtra(TravelPackage::javaClass.name, travelPackage)
             )
+            finish()
         }
     }
 

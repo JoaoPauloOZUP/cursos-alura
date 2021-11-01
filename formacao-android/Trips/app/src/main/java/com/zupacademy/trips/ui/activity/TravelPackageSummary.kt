@@ -60,6 +60,7 @@ class TravelPackageSummary : AppCompatActivity() {
                 Intent(this, PaymentActivity::class.java)
                     .putExtra(TravelPackage::javaClass.name, travelPackage)
             )
+            finish()
         }
     }
 
