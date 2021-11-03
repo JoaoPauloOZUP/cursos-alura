@@ -15,12 +15,12 @@ import com.zupacademy.trips.util.getDrawableImage
 // Por que utilizar ViewHolder?
 class ViewHolderPackageList(
     view: View,
-    private val onItemClickListener: OnItemClickListener
+    private val onItemClickListener: OnItemClickListener,
 ) : RecyclerView.ViewHolder(view) {
 
     init {
         view.setOnClickListener {
-            onItemClickListener.onItemClick(travelPackage)
+            onItemClickListener.onItemClick(travelPackage, adapterPosition)
         }
     }
 

@@ -41,16 +41,16 @@ class PackageListActivity : AppCompatActivity() {
 
     private fun configureOnItemClickListener() {
         adapter.onItemClickListener = object : OnItemClickListener {
-            override fun onItemClick(travelPackage: TravelPackage) {
+            override fun onItemClick(travelPackage: TravelPackage, position: Int) {
                 goToTravelSummary(travelPackage)
             }
         }
     }
 
-    fun goToTravelSummary(travelPackage: TravelPackage) {
+    fun goToTravelSummary(extra: TravelPackage) {
         startActivity(
             Intent(this, TravelPackageSummary::class.java)
-                .putExtra(TravelPackage::javaClass.name, travelPackage)
+                .putExtra(TravelPackage::javaClass.name, extra)
         )
     }
 }
