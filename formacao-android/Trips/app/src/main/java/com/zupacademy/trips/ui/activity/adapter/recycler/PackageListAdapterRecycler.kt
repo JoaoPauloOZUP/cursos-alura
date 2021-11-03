@@ -17,11 +17,13 @@ class PackageListAdapterRecycler(
     private val list: MutableList<TravelPackage>
 ) : RecyclerView.Adapter<ViewHolderPackageList>() {
 
+    lateinit var onItemClickListener: OnItemClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderPackageList {
         val createdView = LayoutInflater.from(context)
             .inflate(R.layout.item_travels_package, parent, false)
 
-        return ViewHolderPackageList(createdView)
+        return ViewHolderPackageList(createdView, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolderPackageList, position: Int) {

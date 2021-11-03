@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zupacademy.trips.R
+import com.zupacademy.trips.model.TravelPackage
+import com.zupacademy.trips.ui.activity.adapter.recycler.OnItemClickListener
 import com.zupacademy.trips.ui.activity.adapter.recycler.PackageListAdapterRecycler
 
 class PackageListActivity : AppCompatActivity() {
 
     private lateinit var recycleview: RecyclerView
     private lateinit var dao: TravelPackageDAO
+    private lateinit var adapter: PackageListAdapterRecycler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,7 @@ class PackageListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         configureAdapter()
+        configureOnItemClickListener()
     }
 
     private fun initializeAttributes() {
@@ -31,16 +35,15 @@ class PackageListActivity : AppCompatActivity() {
     }
 
     private fun configureAdapter() {
-        recycleview.adapter = PackageListAdapterRecycler(this, dao.allTravelPackage().toMutableList())
+        adapter = PackageListAdapterRecycler(this, dao.allTravelPackage().toMutableList())
+        recycleview.adapter = adapter
     }
 
-//    private fun configureOnItemClickListener() {
-//        recycleview.setOnItemClickListener { parent, view, position, id ->
-//            val travelPackageClicked = dao.getPackage(position)
-//            startActivity(
-//                Intent(this, TravelPackageSummary::class.java)
-//                    .putExtra(TravelPackage::javaClass.name, travelPackageClicked)
-//            )
-//        }
-//    }
+    private fun configureOnItemClickListener() {
+        adapter.onItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(travelPackage: TravelPackage) {
+                println(travelPackage.local)
+            }
+        }
+    }
 }
