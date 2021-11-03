@@ -1,9 +1,9 @@
 package com.zupacademy.trips.ui.activity
 
 import TravelPackageDAO
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zupacademy.trips.R
 import com.zupacademy.trips.model.TravelPackage
@@ -42,8 +42,15 @@ class PackageListActivity : AppCompatActivity() {
     private fun configureOnItemClickListener() {
         adapter.onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(travelPackage: TravelPackage) {
-                println(travelPackage.local)
+                goToTravelSummary(travelPackage)
             }
         }
+    }
+
+    fun goToTravelSummary(travelPackage: TravelPackage) {
+        startActivity(
+            Intent(this, TravelPackageSummary::class.java)
+                .putExtra(TravelPackage::javaClass.name, travelPackage)
+        )
     }
 }
