@@ -32,8 +32,6 @@ class PackageListActivity : AppCompatActivity() {
 
     private fun configureAdapter() {
         recycleview.adapter = PackageListAdapterRecycler(this, dao.allTravelPackage().toMutableList())
-        val linearLayout = LinearLayoutManager(this)
-        recycleview.layoutManager = linearLayout
     }
 
 //    private fun configureOnItemClickListener() {

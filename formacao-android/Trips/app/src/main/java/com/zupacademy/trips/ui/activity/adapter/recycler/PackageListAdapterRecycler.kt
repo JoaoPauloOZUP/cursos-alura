@@ -25,10 +25,9 @@ class PackageListAdapterRecycler(
     }
 
     override fun onBindViewHolder(holder: ViewHolderPackageList, position: Int) {
-        holder.localNameView.text = list[position].local
-        holder.daysView.text = formatDayOnView(list[position].days)
-        holder.priceView.text = formatPriceOnView(list[position].price)
-        holder.localImageView.setImageDrawable(getDrawableImage(context, list[position]))
+        list[position].let { travelPackage ->
+            holder.bind(context, travelPackage)
+        }
     }
 
     override fun getItemCount(): Int {

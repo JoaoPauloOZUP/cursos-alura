@@ -51,10 +51,10 @@ class PackageListAdapter(
     }
 
     private fun dataBindOnView(holderPackageList: ViewHolderPackageList, travelPackage: TravelPackage) {
-        holderPackageList.localNameView.text = travelPackage.local
-        holderPackageList.daysView.text = formatDayOnView(travelPackage.days)
-        holderPackageList.priceView.text = formatPriceOnView(travelPackage.price)
-        val drawableImagePackage = getDrawableImage(context, travelPackage)
-        holderPackageList.localImageView.setImageDrawable(drawableImagePackage)
+//        holderPackageList.localNameView.text = travelPackage.local
+//        holderPackageList.daysView.text = formatDayOnView(travelPackage.days)
+//        holderPackageList.priceView.text = formatPriceOnView(travelPackage.price)
+//        val drawableImagePackage = getDrawableImage(context, travelPackage)
+//        holderPackageList.localImageView.setImageDrawable(drawableImagePackage)
     }
 }
