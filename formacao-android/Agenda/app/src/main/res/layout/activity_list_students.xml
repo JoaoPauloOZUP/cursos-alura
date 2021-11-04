@@ -21,8 +21,10 @@
         android:focusable="true"
         android:contentDescription="@string/add_student" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_list_students_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_student" />
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.agenda.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -7,10 +8,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
-import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
-import com.example.agenda.ui.activity.util.ConstSharedActivities
-import com.example.agenda.ui.activity.util.FilterOptionMenu
+import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.DURATION_TOAST
+import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.EDITED_STUDENT_REQUEST
+import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.EXTRA_STUDENT
 
 class FormEditStudentActivity : AppCompatActivity() {
 
@@ -19,11 +20,10 @@ class FormEditStudentActivity : AppCompatActivity() {
         private const val EDITED_STUDENT = "Edited student"
     }
 
-    private val studentDao = StudentDAO()
     private lateinit var nameField: EditText
     private lateinit var phoneField: EditText
     private lateinit var emailField: EditText
-    private var student: Student? = null
+    private var student: Student?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +40,14 @@ class FormEditStudentActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val titleOptionMenu = item.title as String
-        FilterOptionMenu
-            .valueOf(titleOptionMenu.uppercase())
-            .action(editStudent(), studentDao)
-
-        Toast.makeText(this, EDITED_STUDENT, ConstSharedActivities.DURATION_TOAST).show()
+        if(titleOptionMenu == "Save") {
+            setResult(
+                EDITED_STUDENT_REQUEST,
+                Intent(this, ListStudentsActivity::class.java)
+                    .putExtra(EXTRA_STUDENT, editStudent())
+            )
+        }
+        Toast.makeText(this, EDITED_STUDENT, DURATION_TOAST).show()
         finish()
         return super.onOptionsItemSelected(item)
     }
@@ -64,12 +67,12 @@ class FormEditStudentActivity : AppCompatActivity() {
     }
 
     private fun intentIsNotEmpty(): Boolean {
-        return intent.hasExtra(ConstSharedActivities.EXTRA_STUDENT)
+        return intent.hasExtra(EXTRA_STUDENT)
     }
 
     private fun verifyIntent() {
         if(intentIsNotEmpty()) {
-            student = intent.extras!!.getSerializable(ConstSharedActivities.EXTRA_STUDENT) as Student
+            student = intent.extras!!.getSerializable(EXTRA_STUDENT) as Student
             configureFormForEdit(student)
         }
     }
