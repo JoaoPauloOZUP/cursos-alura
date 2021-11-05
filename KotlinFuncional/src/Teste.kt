@@ -1,21 +1,19 @@
 fun main() {
     /**
-     * Variaveis do tipo funcao
+     * Expressao lambda e funcao anonima
      * */
-    val myFunction: (a: String) -> Unit = ::println
-    myFunction("Joca")
-
-    val myFunctionClass = FunctionClass()
-    myFunctionClass()
-    myFunctionClass("Executando Invoke no operator")
-}
-
-class FunctionClass : () -> Unit {
-    override fun invoke() {
-        println("Executando Invoke")
+    val myFunctionLambda: () -> Unit = {
+        println("Executando com expressao Lambda")
     }
+    myFunctionLambda()
 
-    operator fun invoke(message: String) {
-        println(message)
+    val myFunctionAnonymous: () -> Unit = fun () {
+        println("Executando com funcao Anonima")
     }
+    myFunctionAnonymous()
+
+    val testOne = { a: Int, b: Int ->
+        println(a+b)
+    }
+    testOne(10, 10)
 }
