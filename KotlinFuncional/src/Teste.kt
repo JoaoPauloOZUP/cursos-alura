@@ -7,10 +7,15 @@ fun main() {
 
     val myFunctionClass = FunctionClass()
     myFunctionClass()
+    myFunctionClass("Executando Invoke no operator")
 }
 
 class FunctionClass : () -> Unit {
     override fun invoke() {
         println("Executando Invoke")
+    }
+
+    operator fun invoke(message: String) {
+        println(message)
     }
 }
