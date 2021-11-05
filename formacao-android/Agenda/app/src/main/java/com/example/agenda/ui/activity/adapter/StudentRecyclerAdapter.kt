@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.agenda.R
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.adapter.listener.OnItemClickListener
+import java.util.*
 
 class StudentRecyclerAdapter(
     private val context: Context,
@@ -83,10 +84,16 @@ class StudentRecyclerAdapter(
 
     fun remove(position: Int) {
         listStudent.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     @OnLifecycleEvent(ON_RESUME)
     fun updateDataSet() {
         notifyDataSetChanged()
+    }
+
+    fun trade(positionInit: Int, positionEnd: Int) {
+        Collections.swap(listStudent, positionInit, positionInit)
+        notifyItemMoved(positionInit, positionEnd)
     }
 }

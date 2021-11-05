@@ -5,11 +5,13 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agenda.R
 import com.example.agenda.dao.StudentDAO
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.adapter.StudentRecyclerAdapter
+import com.example.agenda.ui.activity.adapter.helper.StudentItemTouchCallback
 import com.example.agenda.ui.activity.adapter.listener.OnItemClickListener
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.CREATED_STUDENT_REQUEST
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.EDITED_STUDENT_REQUEST
@@ -25,6 +27,7 @@ class ListStudentsActivity : AppCompatActivity() {
     private val studentDAO = StudentDAO()
     private lateinit var listStudent: List<Student>
     private lateinit var recyclerView: RecyclerView
+    private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var fabNewStudent: FloatingActionButton
     private lateinit var adapter: StudentRecyclerAdapter
     private lateinit var someActivityResult: ActivityResultLauncher<Intent>
@@ -37,7 +40,7 @@ class ListStudentsActivity : AppCompatActivity() {
         configureActivityResult()
         initializeAttributesViews()
         configureFabNewStudent()
-        configureListStudents()
+        configureRecyclerView()
     }
 
     override fun onResume() {
@@ -114,11 +117,16 @@ class ListStudentsActivity : AppCompatActivity() {
         listStudent = studentDAO.allStudents()
     }
 
-    private fun configureListStudents() {
+    private fun configureRecyclerView() {
         initializeListStudents()
         adapter = StudentRecyclerAdapter(this, listStudent.toMutableList(), lifecycle)
         recyclerView.adapter = adapter
+        configureItemTouchHelper()
         configureOnItemClickListener()
-        registerForContextMenu(recyclerView)
+    }
+
+    private fun configureItemTouchHelper() {
+        itemTouchHelper = ItemTouchHelper(StudentItemTouchCallback(adapter))
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }

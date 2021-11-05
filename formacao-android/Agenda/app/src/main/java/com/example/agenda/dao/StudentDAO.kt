@@ -4,6 +4,7 @@ import android.widget.Toast
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.ListStudentsActivity
 import com.example.agenda.ui.activity.util.ConstSharedActivities
+import java.util.*
 
 class StudentDAO {
 
@@ -51,6 +52,14 @@ class StudentDAO {
         found?.let { foundStudent ->
             listStudent.remove(foundStudent)
         } ?: toast(STUDENT_NOTFOUND)
+    }
+
+    fun remove(position: Int) {
+        listStudent.removeAt(position)
+    }
+
+    fun trade(positionInit: Int, positionEnd: Int) {
+        Collections.swap(listStudent, positionInit, positionEnd)
     }
 
     private fun toast(text: String) {
