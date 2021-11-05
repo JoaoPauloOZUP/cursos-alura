@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,7 +17,10 @@
             android:layout_margin="8dp"
             android:hint="@string/name"
             android:inputType="textCapWords"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
             android:id="@+id/activity_form_students_phone"
@@ -26,7 +29,10 @@
             android:layout_margin="8dp"
             android:hint="@string/phone"
             android:inputType="phone"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            app:layout_constraintStart_toStartOf="@id/activity_form_students_name"
+            app:layout_constraintEnd_toEndOf="@id/activity_form_students_name"
+            app:layout_constraintTop_toBottomOf="@id/activity_form_students_name"/>
 
         <EditText
             android:id="@+id/activity_form_students_email"
@@ -35,6 +41,9 @@
             android:layout_margin="8dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:importantForAutofill="no" />
-    </LinearLayout>
+            android:importantForAutofill="no"
+            app:layout_constraintStart_toStartOf="@id/activity_form_students_phone"
+            app:layout_constraintEnd_toEndOf="@id/activity_form_students_phone"
+            app:layout_constraintTop_toBottomOf="@id/activity_form_students_phone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

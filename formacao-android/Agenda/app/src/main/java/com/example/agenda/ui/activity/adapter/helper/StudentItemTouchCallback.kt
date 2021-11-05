@@ -12,8 +12,8 @@ class StudentItemTouchCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val slideMarks = ItemTouchHelper.RIGHT ; ItemTouchHelper.LEFT
-        val dragMarks = ItemTouchHelper.DOWN ; ItemTouchHelper.UP ; ItemTouchHelper.RIGHT ; ItemTouchHelper.LEFT
+        val slideMarks = ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+        val dragMarks = ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
         return makeMovementFlags(dragMarks, slideMarks)
     }
 
