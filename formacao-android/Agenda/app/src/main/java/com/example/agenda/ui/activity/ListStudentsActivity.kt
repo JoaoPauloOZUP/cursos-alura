@@ -7,8 +7,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.agenda.R
-import com.example.agenda.dao.StudentDAO
+import com.example.agenda.database.Database
+import com.example.agenda.database.room_dao.RoomStudentDAO
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.adapter.StudentRecyclerAdapter
 import com.example.agenda.ui.activity.adapter.helper.StudentItemTouchCallback
@@ -24,7 +26,7 @@ class ListStudentsActivity : AppCompatActivity() {
         private const val TITLE_APPBAR = "Students"
     }
 
-    private val studentDAO = StudentDAO()
+    private lateinit var dao: RoomStudentDAO
     private lateinit var listStudent: List<Student>
     private lateinit var recyclerView: RecyclerView
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -37,6 +39,7 @@ class ListStudentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_students)
         title = TITLE_APPBAR
+        configureDao()
         configureActivityResult()
         initializeAttributesViews()
         configureFabNewStudent()
@@ -82,12 +85,12 @@ class ListStudentsActivity : AppCompatActivity() {
     }
 
     private fun saveStudent(student: Student) {
-        studentDAO.save(student)
+        dao.save(student)
         adapter.save(student)
     }
 
     private fun editStudent(student: Student) {
-        studentDAO.save(student)
+        dao.save(student)
         positionStudentInAdapter?.let { positionStudentInAdapter ->
             adapter.edit(student, positionStudentInAdapter)
         }
@@ -114,7 +117,7 @@ class ListStudentsActivity : AppCompatActivity() {
     }
 
     private fun initializeListStudents() {
-        listStudent = studentDAO.allStudents()
+        listStudent = dao.allStudents()
     }
 
     private fun configureRecyclerView() {
@@ -128,5 +131,17 @@ class ListStudentsActivity : AppCompatActivity() {
     private fun configureItemTouchHelper() {
         itemTouchHelper = ItemTouchHelper(StudentItemTouchCallback(adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun configureDao() {
+        val database = Room.databaseBuilder(
+            this,
+            Database::class.java,
+            "Schedule.db"
+        )
+            .allowMainThreadQueries()
+            .build()
+
+        dao = database.getRoomStudentDAO()
     }
 }
