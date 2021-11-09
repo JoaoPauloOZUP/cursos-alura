@@ -18,7 +18,7 @@ import java.util.*
 class StudentRecyclerAdapter(
     private val context: Context,
     private val listStudent: MutableList<Student>,
-    private val lifecycle: Lifecycle
+    lifecycle: Lifecycle
 ) : RecyclerView.Adapter<StudentRecyclerAdapter.ViewHolder>(), LifecycleObserver {
 
     init {
@@ -68,6 +68,10 @@ class StudentRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return listStudent.count()
+    }
+
+    fun getElement(position: Int): Student {
+        return listStudent[position]
     }
 
     fun save(student: Student) {

@@ -1,9 +1,6 @@
 package com.example.agenda.database.room_dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.agenda.model.Student
 
 @Dao
@@ -16,4 +13,7 @@ interface RoomStudentDAO {
 
     @Delete
     fun remove(student: Student)
+
+    @Update
+    fun edit(student: Student)
 }

@@ -2,12 +2,17 @@ package com.example.agenda.ui.activity.adapter.helper
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.agenda.dao.StudentDAO
+import com.example.agenda.database.Database
+import com.example.agenda.database.room_dao.RoomStudentDAO
 import com.example.agenda.ui.activity.adapter.StudentRecyclerAdapter
 
 class StudentItemTouchCallback(
-    private val adapter: StudentRecyclerAdapter
+    private val adapter: StudentRecyclerAdapter,
+    private val dao: RoomStudentDAO
 ) : ItemTouchHelper.Callback() {
+
     override fun getMovementFlags(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
@@ -31,7 +36,8 @@ class StudentItemTouchCallback(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val slippedStudentPosition = viewHolder.adapterPosition
-        StudentDAO().remove(slippedStudentPosition)
+        val student = adapter.getElement(slippedStudentPosition)
+        dao.remove(student)
         adapter.remove(slippedStudentPosition)
     }
 }

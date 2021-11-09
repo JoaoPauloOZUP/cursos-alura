@@ -7,7 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.agenda.R
 import com.example.agenda.database.Database
 import com.example.agenda.database.room_dao.RoomStudentDAO
@@ -90,7 +89,7 @@ class ListStudentsActivity : AppCompatActivity() {
     }
 
     private fun editStudent(student: Student) {
-        dao.save(student)
+        dao.edit(student)
         positionStudentInAdapter?.let { positionStudentInAdapter ->
             adapter.edit(student, positionStudentInAdapter)
         }
@@ -129,19 +128,12 @@ class ListStudentsActivity : AppCompatActivity() {
     }
 
     private fun configureItemTouchHelper() {
-        itemTouchHelper = ItemTouchHelper(StudentItemTouchCallback(adapter))
+        itemTouchHelper = ItemTouchHelper(StudentItemTouchCallback(adapter, dao))
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun configureDao() {
-        val database = Room.databaseBuilder(
-            this,
-            Database::class.java,
-            "Schedule.db"
-        )
-            .allowMainThreadQueries()
-            .build()
-
-        dao = database.getRoomStudentDAO()
+        val instance = Database.getInstance(this)
+        dao = instance.getRoomStudentDAO()
     }
 }
