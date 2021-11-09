@@ -9,7 +9,7 @@ import com.example.agenda.model.Student
 
 @Database(
     entities = [Student::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class Database : RoomDatabase() {

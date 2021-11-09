@@ -48,7 +48,7 @@ class StudentRecyclerAdapter(
         val phone = view.findViewById<TextView>(R.id.item_student_phone)
 
         fun bind(student: Student) {
-            name.text = student.name
+            name.text = student.fullName()
             phone.text = student.phone
         }
     }

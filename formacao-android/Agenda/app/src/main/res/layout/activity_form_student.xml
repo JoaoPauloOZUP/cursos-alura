@@ -23,6 +23,18 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
+            android:id="@+id/activity_form_students_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="@string/lastname"
+            android:inputType="textCapWords"
+            android:importantForAutofill="no"
+            app:layout_constraintStart_toStartOf="@id/activity_form_students_name"
+            app:layout_constraintEnd_toEndOf="@id/activity_form_students_name"
+            app:layout_constraintTop_toBottomOf="@id/activity_form_students_name"/>
+
+        <EditText
             android:id="@+id/activity_form_students_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,9 +42,9 @@
             android:hint="@string/phone"
             android:inputType="phone"
             android:importantForAutofill="no"
-            app:layout_constraintStart_toStartOf="@id/activity_form_students_name"
-            app:layout_constraintEnd_toEndOf="@id/activity_form_students_name"
-            app:layout_constraintTop_toBottomOf="@id/activity_form_students_name"/>
+            app:layout_constraintStart_toStartOf="@id/activity_form_students_lastname"
+            app:layout_constraintEnd_toEndOf="@id/activity_form_students_lastname"
+            app:layout_constraintTop_toBottomOf="@id/activity_form_students_lastname"/>
 
         <EditText
             android:id="@+id/activity_form_students_email"
