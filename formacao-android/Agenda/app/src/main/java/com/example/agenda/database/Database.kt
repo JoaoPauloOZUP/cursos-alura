@@ -22,6 +22,7 @@ abstract class Database : RoomDatabase() {
                 com.example.agenda.database.Database::class.java,
                 DATABASE
             )
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build()
         }
