@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity
 data class Student(
     var name: String,
-    var lastname: String,
+//    var lastname: String,
     var phone: String,
     var email: String
     ) : Serializable {
@@ -16,7 +16,8 @@ data class Student(
     var id: Long? = null
 
     fun fullName(): String {
-        return "$name $lastname"
+//        return "$name $lastname"
+        return name
     }
 
     override fun toString(): String {

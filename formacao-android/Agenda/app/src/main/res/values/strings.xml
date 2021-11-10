@@ -2,7 +2,7 @@
     <string name="app_name">Agenda</string>
     <string name="remove">Remove</string>
     <string name="save">Save</string>
-    <string name="name">First name</string>
+    <string name="name">Full name</string>
     <string name="phone">Phone</string>
     <string name="email">E-mail</string>
     <string name="add_student">Add Student</string>

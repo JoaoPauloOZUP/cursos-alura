@@ -56,7 +56,7 @@ class FormEditStudentActivity : AppCompatActivity() {
     private fun editStudent(): Student {
         return student!!.apply {
             name = nameField.text.toString()
-            lastname = lastNameField.text.toString()
+//            lastname = lastNameField.text.toString()
             phone = phoneField.text.toString()
             email = emailField.text.toString()
         }
@@ -64,7 +64,7 @@ class FormEditStudentActivity : AppCompatActivity() {
 
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
-        lastNameField = findViewById(R.id.activity_form_students_lastname)
+//        lastNameField = findViewById(R.id.activity_form_students_lastname)
         phoneField = findViewById(R.id.activity_form_students_phone)
         emailField = findViewById(R.id.activity_form_students_email)
     }
@@ -83,7 +83,7 @@ class FormEditStudentActivity : AppCompatActivity() {
     private fun configureFormForEdit(student: Student?) {
         student!!.run {
             nameField.setText(name)
-            lastNameField.setText(lastname)
+//            lastNameField.setText(lastname)
             phoneField.setText(phone)
             emailField.setText(email)
         }

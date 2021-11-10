@@ -54,7 +54,7 @@ class FormCreateStudentActivity : AppCompatActivity() {
     private fun createStudent(): Student {
         return Student(
             name = nameField.text.toString(),
-            lastname = lastNameField.text.toString(),
+//            lastname = lastNameField.text.toString(),
             phone = phoneField.text.toString(),
             email = emailField.text.toString()
         )
@@ -62,7 +62,7 @@ class FormCreateStudentActivity : AppCompatActivity() {
 
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
-        lastNameField = findViewById(R.id.activity_form_students_lastname)
+//        lastNameField = findViewById(R.id.activity_form_students_lastname)
         phoneField = findViewById(R.id.activity_form_students_phone)
         emailField = findViewById(R.id.activity_form_students_email)
     }

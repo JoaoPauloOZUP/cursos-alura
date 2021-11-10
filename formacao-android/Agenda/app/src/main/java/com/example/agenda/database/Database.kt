@@ -11,7 +11,7 @@ import com.example.agenda.model.Student
 
 @Database(
     entities = [Student::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class Database : RoomDatabase() {
@@ -29,6 +29,30 @@ abstract class Database : RoomDatabase() {
                     object : Migration(1, 2) {
                         override fun migrate(database: SupportSQLiteDatabase) {
                             database.execSQL("ALTER TABLE student ADD COLUMN lastname TEXT NOT NULL DEFAULT 0")
+                        }
+                    },
+                    // Migrando para versao anterior do banco depois de uma alteracao
+                    object : Migration(2, 3) {
+                        override fun migrate(database: SupportSQLiteDatabase) {
+                            // Criar nova tabela com as informacoes desejadas
+                            database.execSQL(
+                                "CREATE TABLE IF NOT EXISTS `Student_new` (`name` TEXT NOT NULL, `phone` TEXT NOT NULL, `email` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)"
+                            )
+
+                            // Copiar dados da tabela antiga para a nova
+                            database.execSQL(
+                                "INSERT INTO `Student_new` (name, phone, email, id) SELECT `name`, `phone`, `email`, `id` FROM `Student`"
+                            )
+
+                            // Remover tabela antiga
+                            database.execSQL(
+                                "DROP TABLE `Student`"
+                            )
+
+                            // Renomear a tabela nova com nome da tabela antiga
+                            database.execSQL(
+                                "ALTER TABLE `Student_new` RENAME TO `Student`"
+                            )
                         }
                     }
                 )
