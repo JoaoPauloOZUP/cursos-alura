@@ -56,8 +56,6 @@ class FormCreateStudentActivity : AppCompatActivity() {
     private fun createStudent(): Student {
         return Student(
             name = nameField.text.toString(),
-            phone = listOf(Phone(phoneField.text.toString(), TypePhone.CELULAR)),
-//            phoneCelular = phoneCelularField.text.toString(),
             email = emailField.text.toString()
         )
     }

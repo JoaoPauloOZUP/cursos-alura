@@ -56,8 +56,6 @@ class FormEditStudentActivity : AppCompatActivity() {
     private fun editStudent(): Student {
         return student!!.apply {
             name = nameField.text.toString()
-//            phone = phoneField.text.toString()
-//            phoneCelular = phoneCelularField.text.toString()
             email = emailField.text.toString()
         }
     }
@@ -83,8 +81,6 @@ class FormEditStudentActivity : AppCompatActivity() {
     private fun configureFormForEdit(student: Student?) {
         student!!.run {
             nameField.setText(name)
-//            phoneField.setText(phone)
-//            phoneCelularField.setText(phoneCelular)
             emailField.setText(email)
         }
     }

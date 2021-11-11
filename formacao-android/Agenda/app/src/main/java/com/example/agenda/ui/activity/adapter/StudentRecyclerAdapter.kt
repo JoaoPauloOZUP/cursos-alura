@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agenda.R
+import com.example.agenda.database.Database
 import com.example.agenda.model.Student
 import com.example.agenda.ui.activity.adapter.listener.OnItemClickListener
 import java.util.*
@@ -50,7 +51,9 @@ class StudentRecyclerAdapter(
 
         fun bind(student: Student) {
             name.text = student.fullName()
-//            phone.text = student.phone
+            val database = Database.getInstance(context)
+            val phoneDao = database.getRoomPhoneDAO()
+            phone.text = phoneDao.findPhone().numero
             createdAt.text = student.createdDate()
         }
     }

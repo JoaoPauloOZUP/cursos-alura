@@ -9,7 +9,6 @@ import java.util.*
 @Entity
 data class Student(
     var name: String,
-    var phone: List<Phone>,
     var email: String
     ) : Serializable {
 

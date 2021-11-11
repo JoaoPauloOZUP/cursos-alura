@@ -8,6 +8,7 @@ import androidx.room.TypeConverters
 import com.example.agenda.database.ScheduleMigrations.Companion.MIGRATIONS
 import com.example.agenda.database.converter.ConvertCalendar
 import com.example.agenda.database.converter.ConverterTypedPhone
+import com.example.agenda.database.room_dao.RoomPhoneDAO
 import com.example.agenda.database.room_dao.RoomStudentDAO
 import com.example.agenda.model.Phone
 import com.example.agenda.model.Student
@@ -39,4 +40,6 @@ abstract class Database : RoomDatabase() {
     }
 
     abstract fun getRoomStudentDAO(): RoomStudentDAO
+
+    abstract fun getRoomPhoneDAO(): RoomPhoneDAO
 }
