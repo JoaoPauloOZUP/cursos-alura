@@ -9,7 +9,6 @@ import java.util.*
 @Entity
 data class Student(
     var name: String,
-//    var lastname: String,
     var phone: String,
     var phoneCelular: String,
     var email: String
@@ -21,7 +20,6 @@ data class Student(
     var createdAt: Calendar = Calendar.getInstance()
 
     fun fullName(): String {
-//        return "$name $lastname"
         return name
     }
 
