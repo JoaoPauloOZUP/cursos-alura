@@ -8,7 +8,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
+import com.example.agenda.model.Phone
 import com.example.agenda.model.Student
+import com.example.agenda.model.TypePhone
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.CREATED_STUDENT_REQUEST
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.DURATION_TOAST
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.EXTRA_STUDENT
@@ -54,8 +56,8 @@ class FormCreateStudentActivity : AppCompatActivity() {
     private fun createStudent(): Student {
         return Student(
             name = nameField.text.toString(),
-            phone = phoneField.text.toString(),
-            phoneCelular = phoneCelularField.text.toString(),
+            phone = listOf(Phone(phoneField.text.toString(), TypePhone.CELULAR)),
+//            phoneCelular = phoneCelularField.text.toString(),
             email = emailField.text.toString()
         )
     }

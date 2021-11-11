@@ -61,7 +61,7 @@ class StudentCustomAdapter(
     private fun dataBindOnView(createdView: View, student: Student) {
         val nameTextView = createdView.findViewById<TextView>(R.id.item_student_name)
         val phoneTextView = createdView.findViewById<TextView>(R.id.item_student_phone)
-        nameTextView.text = student.name
-        phoneTextView.text = student.phone
+//        nameTextView.text = student.name
+//        phoneTextView.text = student.phone
     }
 }

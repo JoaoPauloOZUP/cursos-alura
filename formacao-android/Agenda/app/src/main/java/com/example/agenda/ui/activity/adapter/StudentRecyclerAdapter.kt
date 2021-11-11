@@ -50,7 +50,7 @@ class StudentRecyclerAdapter(
 
         fun bind(student: Student) {
             name.text = student.fullName()
-            phone.text = student.phone
+//            phone.text = student.phone
             createdAt.text = student.createdDate()
         }
     }
