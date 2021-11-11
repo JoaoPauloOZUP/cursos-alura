@@ -53,7 +53,7 @@ class StudentRecyclerAdapter(
             name.text = student.fullName()
             val database = Database.getInstance(context)
             val phoneDao = database.getRoomPhoneDAO()
-            phone.text = phoneDao.findPhone().numero
+            phone.text = phoneDao.findPhone(student.id!!).numero
             createdAt.text = student.createdDate()
         }
     }
