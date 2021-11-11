@@ -5,15 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.agenda.database.ScheduleMigrations.Companion.MIGRATIONS
 import com.example.agenda.database.converter.ConvertCalendar
 import com.example.agenda.database.room_dao.RoomStudentDAO
 import com.example.agenda.model.Student
 
 @Database(
     entities = [Student::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 
@@ -31,6 +30,7 @@ abstract class Database : RoomDatabase() {
                 DATABASE
             )
                 .allowMainThreadQueries()
+                .addMigrations(*MIGRATIONS)
                 .build()
         }
     }

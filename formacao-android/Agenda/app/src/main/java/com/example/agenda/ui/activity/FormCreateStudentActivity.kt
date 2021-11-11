@@ -21,8 +21,8 @@ class FormCreateStudentActivity : AppCompatActivity() {
     }
 
     private lateinit var nameField: EditText
-    private lateinit var lastNameField: EditText
     private lateinit var phoneField: EditText
+    private lateinit var phoneCelularField: EditText
     private lateinit var emailField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,16 +54,16 @@ class FormCreateStudentActivity : AppCompatActivity() {
     private fun createStudent(): Student {
         return Student(
             name = nameField.text.toString(),
-//            lastname = lastNameField.text.toString(),
             phone = phoneField.text.toString(),
+            phoneCelular = phoneCelularField.text.toString(),
             email = emailField.text.toString()
         )
     }
 
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
-//        lastNameField = findViewById(R.id.activity_form_students_lastname)
         phoneField = findViewById(R.id.activity_form_students_phone)
+        phoneCelularField = findViewById(R.id.activity_form_students_celular_phone)
         emailField = findViewById(R.id.activity_form_students_email)
     }
 }

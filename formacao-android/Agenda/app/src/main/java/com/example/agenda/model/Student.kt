@@ -11,6 +11,7 @@ data class Student(
     var name: String,
 //    var lastname: String,
     var phone: String,
+    var phoneCelular: String,
     var email: String
     ) : Serializable {
 

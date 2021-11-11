@@ -21,8 +21,8 @@ class FormEditStudentActivity : AppCompatActivity() {
     }
 
     private lateinit var nameField: EditText
-    private lateinit var lastNameField: EditText
     private lateinit var phoneField: EditText
+    private lateinit var phoneCelularField: EditText
     private lateinit var emailField: EditText
     private var student: Student?= null
 
@@ -56,16 +56,16 @@ class FormEditStudentActivity : AppCompatActivity() {
     private fun editStudent(): Student {
         return student!!.apply {
             name = nameField.text.toString()
-//            lastname = lastNameField.text.toString()
             phone = phoneField.text.toString()
+            phoneCelular = phoneCelularField.text.toString()
             email = emailField.text.toString()
         }
     }
 
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
-//        lastNameField = findViewById(R.id.activity_form_students_lastname)
         phoneField = findViewById(R.id.activity_form_students_phone)
+        phoneCelularField = findViewById(R.id.activity_form_students_celular_phone)
         emailField = findViewById(R.id.activity_form_students_email)
     }
 
@@ -83,8 +83,8 @@ class FormEditStudentActivity : AppCompatActivity() {
     private fun configureFormForEdit(student: Student?) {
         student!!.run {
             nameField.setText(name)
-//            lastNameField.setText(lastname)
             phoneField.setText(phone)
+            phoneCelularField.setText(phoneCelular)
             emailField.setText(email)
         }
     }
