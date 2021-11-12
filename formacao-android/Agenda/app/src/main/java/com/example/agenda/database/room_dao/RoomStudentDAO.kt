@@ -6,7 +6,7 @@ import com.example.agenda.model.Student
 @Dao
 interface RoomStudentDAO {
     @Insert
-    fun save(student: Student)
+    fun save(student: Student): Long
 
     @Query("SELECT * FROM student")
     fun allStudents(): List<Student>

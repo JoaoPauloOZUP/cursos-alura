@@ -35,7 +35,7 @@
             app:layout_constraintTop_toBottomOf="@id/activity_form_students_name"/>
 
         <EditText
-            android:id="@+id/activity_form_students_phone"
+            android:id="@+id/activity_form_students_landline_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -54,8 +54,8 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:importantForAutofill="no"
-            app:layout_constraintStart_toStartOf="@id/activity_form_students_phone"
-            app:layout_constraintEnd_toEndOf="@id/activity_form_students_phone"
-            app:layout_constraintTop_toBottomOf="@id/activity_form_students_phone"/>
+            app:layout_constraintStart_toStartOf="@id/activity_form_students_landline_phone"
+            app:layout_constraintEnd_toEndOf="@id/activity_form_students_landline_phone"
+            app:layout_constraintTop_toBottomOf="@id/activity_form_students_landline_phone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

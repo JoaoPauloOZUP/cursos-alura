@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agenda.R
 import com.example.agenda.model.Phone
 import com.example.agenda.model.Student
-import com.example.agenda.model.TypePhone
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.CREATED_STUDENT_REQUEST
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.DURATION_TOAST
 import com.example.agenda.ui.activity.util.ConstSharedActivities.Companion.EXTRA_STUDENT
@@ -23,8 +22,8 @@ class FormCreateStudentActivity : AppCompatActivity() {
     }
 
     private lateinit var nameField: EditText
-    private lateinit var phoneField: EditText
-    private lateinit var phoneCelularField: EditText
+    private lateinit var landlinePhoneField: EditText
+    private lateinit var celularPhoneField: EditText
     private lateinit var emailField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +61,8 @@ class FormCreateStudentActivity : AppCompatActivity() {
 
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
-        phoneField = findViewById(R.id.activity_form_students_phone)
-        phoneCelularField = findViewById(R.id.activity_form_students_celular_phone)
+        landlinePhoneField = findViewById(R.id.activity_form_students_landline_phone)
+        celularPhoneField = findViewById(R.id.activity_form_students_celular_phone)
         emailField = findViewById(R.id.activity_form_students_email)
     }
 }

@@ -7,6 +7,8 @@ import com.example.agenda.model.Phone
 @Dao
 interface RoomPhoneDAO {
 
+    fun save(vararg phone: Phone)
+
     @Query(
         "SELECT p.* " +
         "FROM Phone p " +

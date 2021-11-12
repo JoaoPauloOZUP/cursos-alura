@@ -62,7 +62,7 @@ class FormEditStudentActivity : AppCompatActivity() {
 
     private fun initializeAttributesViews() {
         nameField = findViewById(R.id.activity_form_students_name)
-        phoneField = findViewById(R.id.activity_form_students_phone)
+        phoneField = findViewById(R.id.activity_form_students_landline_phone)
         phoneCelularField = findViewById(R.id.activity_form_students_celular_phone)
         emailField = findViewById(R.id.activity_form_students_email)
     }
