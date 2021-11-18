@@ -4,11 +4,13 @@ import TravelPackageDAO
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.zupacademy.trips.R
 import com.zupacademy.trips.model.TravelPackage
 import com.zupacademy.trips.ui.activity.adapter.recycler.OnItemClickListener
 import com.zupacademy.trips.ui.activity.adapter.recycler.PackageListAdapterRecycler
+import com.zupacademy.trips.ui.activity.adapter.recycler.TravelPackageItemCallback
 
 class PackageListActivity : AppCompatActivity() {
 
@@ -37,6 +39,9 @@ class PackageListActivity : AppCompatActivity() {
     private fun configureAdapter() {
         adapter = PackageListAdapterRecycler(this, dao.allTravelPackage().toMutableList())
         recycleview.adapter = adapter
+        ItemTouchHelper(TravelPackageItemCallback()).run {
+            attachToRecyclerView(recycleview)
+        }
     }
 
     private fun configureOnItemClickListener() {
