@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
+import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
 import com.zupacademy.scheduleofstudent.ui.shared.CREATED_RESULT
 import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
 import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU
@@ -54,8 +55,8 @@ class FormCreateStudent : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun createdStudent(): Student {
-        return Student(
+    fun createdStudent(): StudentRequest {
+        return StudentRequest(
             name = name.text.toString(),
             phone = phone.text.toString(),
             email = email.text.toString()

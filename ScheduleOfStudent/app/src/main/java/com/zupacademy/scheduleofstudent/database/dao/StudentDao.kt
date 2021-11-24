@@ -3,6 +3,7 @@ package com.zupacademy.scheduleofstudent.database.dao
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.zupacademy.scheduleofstudent.database.entity.Student
+import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentResponse
 
 @Dao
 interface StudentDao {
@@ -18,6 +19,9 @@ interface StudentDao {
     @Insert(onConflict = REPLACE)
     fun edit(student: Student)
 
+    @Insert(onConflict = REPLACE)
+    fun save(student: List<Student>)
+
     @Query("UPDATE student SET `indice` = :indice WHERE `id` = :id")
-    fun updateIndice(indice: Int, id: Long)
+    fun updateIndice(id: Long, indice: Int)
 }

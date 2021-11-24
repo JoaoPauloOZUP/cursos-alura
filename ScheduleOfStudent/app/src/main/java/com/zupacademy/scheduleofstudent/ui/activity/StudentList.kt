@@ -12,18 +12,17 @@ import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.Database
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
 import com.zupacademy.scheduleofstudent.database.entity.Student
+import com.zupacademy.scheduleofstudent.database.repository.LoadedDataListener
+import com.zupacademy.scheduleofstudent.database.repository.StudentRepository
 import com.zupacademy.scheduleofstudent.retrofit.StudentRetrofit
+import com.zupacademy.scheduleofstudent.retrofit.service.StudentService
+import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
 import com.zupacademy.scheduleofstudent.ui.adapter.StudentRecyclerAdapter
 import com.zupacademy.scheduleofstudent.ui.helper.StudentItemTouchCallback
 import com.zupacademy.scheduleofstudent.ui.listerner.OnItemClickListener
 import com.zupacademy.scheduleofstudent.ui.shared.CREATED_RESULT
 import com.zupacademy.scheduleofstudent.ui.shared.EDITED_RESULT
 import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class StudentList : AppCompatActivity() {
@@ -34,12 +33,10 @@ class StudentList : AppCompatActivity() {
 
     private lateinit var fabNewStudent: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
-    private val database: Database by inject<Database>()
-    private lateinit var dao: StudentDao
-    private var studentList: List<Student> = listOf()
     private lateinit var adapter: StudentRecyclerAdapter
     private lateinit var someActivityResult: ActivityResultLauncher<Intent>
     private lateinit var itemTouchHelper: ItemTouchHelper
+    private val repository: StudentRepository by inject<StudentRepository>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +44,6 @@ class StudentList : AppCompatActivity() {
         setContentView(R.layout.activity_student_list)
         title = APPBAR_TITLE
         initializeAttributesOnView()
-        initializeDao()
         configureAdapter()
         configureFabOnclickListener()
         configureActivityResult()
@@ -59,20 +55,18 @@ class StudentList : AppCompatActivity() {
     }
 
     private fun initializeDao() {
-        dao = database.getStudentDAO()
+
     }
 
     private fun configureAdapter() {
-        CoroutineScope(IO).launch {
-            studentList = dao.allStudents()
-
-            withContext(Main) {
-                adapter = StudentRecyclerAdapter(this@StudentList, studentList.toMutableList(), dao)
+        repository.findAllStudents(object: LoadedDataListener() {
+            override fun whenLoaded(studentList: List<Student>) {
+                adapter = StudentRecyclerAdapter(this@StudentList, studentList.toMutableList(), repository)
                 configureOnItemClickListener()
                 recyclerView.adapter = adapter
                 configureItemTouchHelper()
             }
-        }
+        })
     }
 
     private fun configureFabOnclickListener() {
@@ -86,7 +80,6 @@ class StudentList : AppCompatActivity() {
     private fun configureOnItemClickListener() {
         val onItemClickListener = object : OnItemClickListener<Student>(){
             override fun onClick(student: Student, position: Int) {
-                // adapterPosition = position
                 startFormStudentActivityWithExtra(student)
             }
         }
@@ -108,26 +101,23 @@ class StudentList : AppCompatActivity() {
 
     private fun activityResult(resultCode: Int, data: Intent?) {
         if (resultCode ==  CREATED_RESULT) {
-            val student = data?.getSerializableExtra(EXTRA_STUDENT) as Student
-            CoroutineScope(IO).launch {
-                val idStudent = dao.save(student)
+            val studentRequest = data?.getSerializableExtra(EXTRA_STUDENT) as StudentRequest
 
-                withContext(Main) {
-                    student.id = idStudent
+            repository.saveStudent(studentRequest, object: LoadedDataListener() {
+                override fun whenLoaded(student: Student) {
                     adapter.save(student)
                 }
-            }
+            })
         }
 
         if (resultCode ==  EDITED_RESULT) {
-            val student = data?.getSerializableExtra(EXTRA_STUDENT) as Student
-            CoroutineScope(IO).launch {
-                dao.edit(student)
+            val studentEdit = data?.getSerializableExtra(EXTRA_STUDENT) as Student
 
-                withContext(Main) {
+            repository.editStudent(studentEdit, object: LoadedDataListener() {
+                override fun whenLoaded(student: Student) {
                     adapter.edit(student)
                 }
-            }
+            })
         }
     }
 

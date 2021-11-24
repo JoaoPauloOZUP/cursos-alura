@@ -7,7 +7,7 @@ import com.zupacademy.scheduleofstudent.database.entity.Student
 
 @Database(
     entities = [Student::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class Database : RoomDatabase() {

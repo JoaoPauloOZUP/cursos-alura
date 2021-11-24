@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.zupacademy.scheduleofstudent.R
-import com.zupacademy.scheduleofstudent.database.dao.StudentDao
 import com.zupacademy.scheduleofstudent.database.entity.Student
+import com.zupacademy.scheduleofstudent.database.repository.StudentRepository
 import com.zupacademy.scheduleofstudent.ui.listerner.OnItemClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -18,7 +18,7 @@ import java.util.*
 class StudentRecyclerAdapter(
     private val context: Context,
     private val studentList: MutableList<Student>,
-    private val dao: StudentDao
+    private val repository: StudentRepository
 ) : RecyclerView.Adapter<StudentRecyclerAdapter.ViewHolder>() {
 
     private lateinit var onItemClickListener: OnItemClickListener<Student>
@@ -36,8 +36,8 @@ class StudentRecyclerAdapter(
             }
         }
 
-        val name = view.findViewById<TextView>(R.id.list_item_name)
-        val phone = view.findViewById<TextView>(R.id.list_item_phone)
+        val name: TextView = view.findViewById(R.id.list_item_name)
+        val phone: TextView = view.findViewById(R.id.list_item_phone)
 
         fun bind(student: Student) {
             name.text = student.name
@@ -45,7 +45,7 @@ class StudentRecyclerAdapter(
 
             student.indice = adapterPosition
             CoroutineScope(IO).launch {
-                dao.updateIndice(adapterPosition, student.id!!)
+                repository.updateIndice(student.id, adapterPosition)
             }
         }
     }
@@ -84,28 +84,26 @@ class StudentRecyclerAdapter(
 
     fun remove(position: Int) {
         val student = studentList[position]
-        CoroutineScope(IO).launch {
-            dao.remove(student)
+        repository.deleteStudent(student) {
+            studentList.removeAt(position)
+            notifyItemRemoved(position)
         }
-
-        studentList.removeAt(position)
-        notifyItemRemoved(position)
     }
 
-    fun trade(initPostion: Int, endPosition: Int) {
-        val studentAtInitPosition = studentList[initPostion]
+    fun trade(initPosition: Int, endPosition: Int) {
+        val studentAtInitPosition = studentList[initPosition]
         val studentAtEndPosition = studentList[endPosition]
 
         studentAtInitPosition.indice = endPosition
-        studentAtEndPosition.indice = initPostion
+        studentAtEndPosition.indice = initPosition
 
         CoroutineScope(IO).launch {
-            dao.updateIndice(initPostion, studentAtEndPosition.id!!)
-            dao.updateIndice(endPosition, studentAtInitPosition.id!!)
+            repository.updateIndice(studentAtEndPosition.id, initPosition)
+            repository.updateIndice(studentAtInitPosition.id, endPosition)
         }
 
-        Collections.swap(studentList, initPostion, endPosition)
-        notifyItemMoved(initPostion, endPosition)
+        Collections.swap(studentList, initPosition, endPosition)
+        notifyItemMoved(initPosition, endPosition)
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener<Student>) {
