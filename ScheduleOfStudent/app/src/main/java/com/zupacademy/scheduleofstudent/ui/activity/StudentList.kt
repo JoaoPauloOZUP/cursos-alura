@@ -1,13 +1,18 @@
 package com.zupacademy.scheduleofstudent.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.messaging.FirebaseMessaging
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.Database
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
@@ -58,15 +63,8 @@ class StudentList : AppCompatActivity() {
 
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun configureAdapter() {
-        repository.findAllStudents(object: LoadedDataListener() {
-            override fun whenLoaded(studentList: List<Student>) {
-                adapter = StudentRecyclerAdapter(this@StudentList, studentList.toMutableList(), repository)
-                configureOnItemClickListener()
-                recyclerView.adapter = adapter
-                configureItemTouchHelper()
-            }
-        })
     }
 
     private fun configureFabOnclickListener() {

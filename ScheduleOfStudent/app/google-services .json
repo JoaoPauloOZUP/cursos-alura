@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "426429827879",
+    "project_id": "test2-academy",
+    "storage_bucket": "test2-academy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426429827879:android:233567468e57376c893702",
+        "android_client_info": {
+          "package_name": "com.zupacademy.scheduleofstudent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426429827879-6gbkplmddrp0a79bldgnabf9pjkpgsp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ3-jTcAIILJOW99EBZue3DQS03ydH3zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426429827879-6gbkplmddrp0a79bldgnabf9pjkpgsp1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

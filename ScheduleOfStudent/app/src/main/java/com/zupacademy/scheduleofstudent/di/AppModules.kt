@@ -3,6 +3,7 @@ package com.zupacademy.scheduleofstudent.di
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.zupacademy.scheduleofstudent.database.Database
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
 import com.zupacademy.scheduleofstudent.database.entity.Student
@@ -52,14 +53,4 @@ val appModules = module {
     single<StudentRepository> {
         StudentRepository(get(), get(), get())
     }
-
-//    single<StudentRecyclerAdapter> {
-//        var students = mutableListOf<Student>()
-//        get<StudentRepository>().findAllStudents(object: LoadedDataListener() {
-//            override fun whenLoaded(studentList: List<Student>) {
-//                students = studentList.toMutableList()
-//            }
-//        })
-//        return@single StudentRecyclerAdapter(get(), students, get())
-//    }
 }
