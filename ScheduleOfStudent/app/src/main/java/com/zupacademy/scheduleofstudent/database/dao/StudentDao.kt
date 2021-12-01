@@ -1,5 +1,6 @@
 package com.zupacademy.scheduleofstudent.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.zupacademy.scheduleofstudent.database.entity.Student
@@ -12,6 +13,9 @@ interface StudentDao {
 
     @Query("SELECT * FROM `student` ORDER BY `indice`")
     fun allStudents(): List<Student>
+
+    @Query("SELECT * FROM `student` WHERE id = :id")
+    fun findById(id: Long): LiveData<Student>
 
     @Delete
     fun remove(student: Student)

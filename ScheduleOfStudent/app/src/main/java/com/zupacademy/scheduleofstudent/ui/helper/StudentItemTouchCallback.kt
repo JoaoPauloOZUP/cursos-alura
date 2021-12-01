@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
 import com.zupacademy.scheduleofstudent.ui.adapter.StudentRecyclerAdapter
+import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -33,7 +34,6 @@ class StudentItemTouchCallback(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
-        val student = adapter.getItem(position)
         adapter.remove(position)
     }
 }

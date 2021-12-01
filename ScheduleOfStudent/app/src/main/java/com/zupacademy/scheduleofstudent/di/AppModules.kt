@@ -1,17 +1,16 @@
 package com.zupacademy.scheduleofstudent.di
 
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.google.firebase.messaging.FirebaseMessaging
 import com.zupacademy.scheduleofstudent.database.Database
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
-import com.zupacademy.scheduleofstudent.database.entity.Student
-import com.zupacademy.scheduleofstudent.database.repository.LoadedDataListener
 import com.zupacademy.scheduleofstudent.database.repository.StudentRepository
 import com.zupacademy.scheduleofstudent.retrofit.StudentRetrofit
 import com.zupacademy.scheduleofstudent.retrofit.service.StudentService
-import com.zupacademy.scheduleofstudent.ui.adapter.StudentRecyclerAdapter
+import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
 import org.koin.dsl.module
 
 private const val DATABASE_NAME = "Schedule.db"
@@ -51,6 +50,10 @@ val appModules = module {
     }
 
     single<StudentRepository> {
-        StudentRepository(get(), get(), get())
+        StudentRepository(get(), get())
+    }
+
+    single<StudentListViewModelFactory> {
+        StudentListViewModelFactory(get())
     }
 }

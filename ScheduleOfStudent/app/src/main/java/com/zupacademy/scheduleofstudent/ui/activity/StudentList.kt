@@ -1,26 +1,20 @@
 package com.zupacademy.scheduleofstudent.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.messaging.FirebaseMessaging
 import com.zupacademy.scheduleofstudent.R
-import com.zupacademy.scheduleofstudent.database.Database
-import com.zupacademy.scheduleofstudent.database.dao.StudentDao
 import com.zupacademy.scheduleofstudent.database.entity.Student
-import com.zupacademy.scheduleofstudent.database.repository.LoadedDataListener
 import com.zupacademy.scheduleofstudent.database.repository.StudentRepository
-import com.zupacademy.scheduleofstudent.retrofit.StudentRetrofit
-import com.zupacademy.scheduleofstudent.retrofit.service.StudentService
 import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
 import com.zupacademy.scheduleofstudent.ui.adapter.StudentRecyclerAdapter
 import com.zupacademy.scheduleofstudent.ui.helper.StudentItemTouchCallback
@@ -28,6 +22,8 @@ import com.zupacademy.scheduleofstudent.ui.listerner.OnItemClickListener
 import com.zupacademy.scheduleofstudent.ui.shared.CREATED_RESULT
 import com.zupacademy.scheduleofstudent.ui.shared.EDITED_RESULT
 import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
+import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
+import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
 import org.koin.android.ext.android.inject
 
 class StudentList : AppCompatActivity() {
@@ -36,35 +32,40 @@ class StudentList : AppCompatActivity() {
         private const val APPBAR_TITLE = "Student list"
     }
 
-    private lateinit var fabNewStudent: FloatingActionButton
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StudentRecyclerAdapter
     private lateinit var someActivityResult: ActivityResultLauncher<Intent>
-    private lateinit var itemTouchHelper: ItemTouchHelper
-    private val repository: StudentRepository by inject<StudentRepository>()
-
+    private val repository: StudentRepository by inject()
+    private val factory: StudentListViewModelFactory by inject()
+    private val fabNewStudent: FloatingActionButton by lazy {
+        findViewById(R.id.student_list_new_student_fab)
+    }
+    private val recyclerView: RecyclerView by lazy {
+        findViewById(R.id.student_list_recycler_view)
+    }
+    private val itemTouchHelper: ItemTouchHelper by lazy {
+        ItemTouchHelper(StudentItemTouchCallback(adapter))
+    }
+    private val viewModel by lazy {
+        val provider: ViewModelProvider = ViewModelProviders.of(this,  factory)
+        provider.get(StudentListViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_list)
         title = APPBAR_TITLE
-        initializeAttributesOnView()
         configureAdapter()
         configureFabOnclickListener()
         configureActivityResult()
     }
 
-    private fun initializeAttributesOnView() {
-        fabNewStudent = findViewById(R.id.student_list_new_student_fab)
-        recyclerView = findViewById(R.id.student_list_recycler_view)
-    }
-
-    private fun initializeDao() {
-
-    }
-
-    @SuppressLint("StringFormatInvalid")
     private fun configureAdapter() {
+        viewModel.findAllStudents(::toast).observe(this, Observer { studentList ->
+            adapter = StudentRecyclerAdapter(this, studentList.toMutableList(), repository)
+            configureOnItemClickListener()
+            recyclerView.adapter = adapter
+            configureItemTouchHelper()
+        })
     }
 
     private fun configureFabOnclickListener() {
@@ -77,8 +78,8 @@ class StudentList : AppCompatActivity() {
 
     private fun configureOnItemClickListener() {
         val onItemClickListener = object : OnItemClickListener<Student>(){
-            override fun onClick(student: Student, position: Int) {
-                startFormStudentActivityWithExtra(student)
+            override fun onClick(item: Student, position: Int) {
+                startFormStudentActivityWithExtra(item)
             }
         }
         adapter.setOnItemClickListener(onItemClickListener)
@@ -93,7 +94,6 @@ class StudentList : AppCompatActivity() {
     }
 
     private fun configureItemTouchHelper() {
-        itemTouchHelper = ItemTouchHelper(StudentItemTouchCallback(adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
@@ -101,20 +101,16 @@ class StudentList : AppCompatActivity() {
         if (resultCode ==  CREATED_RESULT) {
             val studentRequest = data?.getSerializableExtra(EXTRA_STUDENT) as StudentRequest
 
-            repository.saveStudent(studentRequest, object: LoadedDataListener() {
-                override fun whenLoaded(student: Student) {
-                    adapter.save(student)
-                }
+            viewModel.saveStudent(studentRequest, ::toast).observe(this, { student ->
+                adapter.save(student)
             })
         }
 
         if (resultCode ==  EDITED_RESULT) {
             val studentEdit = data?.getSerializableExtra(EXTRA_STUDENT) as Student
 
-            repository.editStudent(studentEdit, object: LoadedDataListener() {
-                override fun whenLoaded(student: Student) {
-                    adapter.edit(student)
-                }
+            viewModel.editStudent(studentEdit, ::toast).observe(this, { student ->
+                adapter.edit(student)
             })
         }
     }
@@ -124,5 +120,9 @@ class StudentList : AppCompatActivity() {
             Intent(this, FormEditStudent::class.java)
                 .putExtra(EXTRA_STUDENT, student)
         )
+    }
+
+    private fun toast() {
+        Toast.makeText(this, "Error your network!", Toast.LENGTH_SHORT).show()
     }
 }

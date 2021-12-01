@@ -1,7 +1,7 @@
 package com.zupacademy.scheduleofstudent.database.repository
 
-import android.content.Context
-import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
 import com.zupacademy.scheduleofstudent.database.entity.Student
 import com.zupacademy.scheduleofstudent.retrofit.service.StudentService
@@ -15,20 +15,21 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import kotlin.Comparator
+import java.net.ConnectException
 
 class StudentRepository(
-    private val context: Context,
     private val dao: StudentDao,
     private val service: StudentService
 ) {
 
-    fun findAllStudents(callback: LoadedDataListener) {
+    private val liveDataOfStudentList = MutableLiveData<List<Student>>()
+    private val liveDataOfStudent = MutableLiveData<Student>()
+
+    fun findAllStudents(error: () -> Unit): LiveData<List<Student>> {
         val call = service.getAllStudents()
-        call.enqueue(object: Callback<List<StudentResponse>>{
+        call.enqueue(object: Callback<List<StudentResponse>> {
             override fun onResponse(
-                call: retrofit2.Call<List<StudentResponse>>,
+                call: Call<List<StudentResponse>>,
                 response: Response<List<StudentResponse>>
             ) {
                 if(response.isSuccessful) {
@@ -45,22 +46,22 @@ class StudentRepository(
                         CoroutineScope(IO).launch {
                             dao.save(allStudentList)
                             withContext(Main) {
-                                callback.whenLoaded(allStudentList)
+                                liveDataOfStudentList.value = allStudentList
                             }
                         }
                     }
-                } else {
-                    loadFromDatabase(callback)
                 }
             }
 
-            override fun onFailure(call: retrofit2.Call<List<StudentResponse>>, t: Throwable) {
-                loadFromDatabase(callback)
+            override fun onFailure(call: Call<List<StudentResponse>>, t: Throwable) {
+                loadFromDatabase(error)
             }
         })
+
+        return liveDataOfStudentList
     }
 
-    fun saveStudent(studentRequest: StudentRequest, callback: LoadedDataListener) {
+    fun saveStudent(studentRequest: StudentRequest, error: () -> Unit): LiveData<Student> {
         val call = service.saveStudent(studentRequest)
         call.enqueue(object: Callback<StudentResponse>{
             override fun onResponse(
@@ -72,20 +73,21 @@ class StudentRepository(
 
                 CoroutineScope(IO).launch {
                     dao.edit(managedStudent)
-
-                    withContext(Main) {
-                        callback.whenLoaded(managedStudent)
-                    }
                 }
+
+                liveDataOfStudent.value = managedStudent
             }
 
             override fun onFailure(call: retrofit2.Call<StudentResponse>, t: Throwable) {
-                toast()
+                CoroutineScope(Main).launch {
+                    error()
+                }
             }
         })
+        return liveDataOfStudent
     }
 
-    fun editStudent(student: Student, callback: LoadedDataListener) {
+    fun editStudent(student: Student, error: () -> Unit): LiveData<Student> {
         val call = service.editStudent(student.id, StudentRequest(student))
         call.enqueue(object: Callback<StudentResponse> {
             override fun onResponse(
@@ -102,60 +104,58 @@ class StudentRepository(
 
                     withContext(Main) {
                         print(student)
-                        callback.whenLoaded(student)
                     }
+
+                    liveDataOfStudent.value = student
                 }
             }
 
             override fun onFailure(call: Call<StudentResponse>, t: Throwable) {
-                toast()
+                CoroutineScope(Main).launch {
+                    error()
+                }
             }
         })
+        return liveDataOfStudent
     }
 
-    fun deleteStudent(student: Student, callback: () -> Unit) {
+    fun deleteStudent(student: Student, callback: (success: Boolean) -> Unit) {
         CoroutineScope(IO).launch {
             val call = service.deleteStudent(student.id).execute()
             if(call.isSuccessful) {
                 dao.remove(student)
 
                 withContext(Main) {
-                    callback()
+                    callback(true)
                 }
-            } else {
-                toast()
             }
         }
     }
 
-    fun updateIndice(id: Long, adapterPosition: Int) {
-        println(id)
+    fun updateIndex(id: Long, adapterPosition: Int, error: () -> Unit): LiveData<Unit> {
         CoroutineScope(IO).launch {
-            val call = service.updateIndice(id, adapterPosition).execute()
-            if(call.isSuccessful) {
-                dao.updateIndice(id, adapterPosition)
-            } else {
-                toast()
+            try {
+                val call = service.updateIndice(id, adapterPosition).execute()
+                if(call.isSuccessful) {
+                    dao.updateIndice(id, adapterPosition)
+                }
+            } catch (e: ConnectException) {
+                CoroutineScope(Main).launch {
+                    error()
+                }
             }
         }
+
+        return MutableLiveData()
     }
 
-    fun loadFromDatabase(callback: LoadedDataListener) {
+    fun loadFromDatabase(error: () -> Unit) {
         CoroutineScope(IO).launch {
             val allStudentList = dao.allStudents()
-            print(allStudentList)
             withContext(Main) {
-                callback.whenLoaded(allStudentList)
+                liveDataOfStudentList.value = allStudentList
+                error()
             }
         }
     }
-
-    private fun toast() {
-        Toast.makeText(context, "Connection error. Check your internet", Toast.LENGTH_SHORT)
-    }
-}
-
-abstract class LoadedDataListener {
-    open fun whenLoaded(student: Student) {}
-    open fun whenLoaded(studentList: List<Student>) {}
 }

@@ -45,7 +45,7 @@ class StudentRecyclerAdapter(
 
             student.indice = adapterPosition
             CoroutineScope(IO).launch {
-                repository.updateIndice(student.id, adapterPosition)
+                repository.updateIndex(student.id, adapterPosition, {})
             }
         }
     }
@@ -83,10 +83,11 @@ class StudentRecyclerAdapter(
     }
 
     fun remove(position: Int) {
-        val student = studentList[position]
-        repository.deleteStudent(student) {
-            studentList.removeAt(position)
-            notifyItemRemoved(position)
+        repository.deleteStudent(studentList[position]) { success ->
+            if(success) {
+                studentList.removeAt(position)
+                notifyItemRemoved(position)
+            }
         }
     }
 
@@ -98,8 +99,8 @@ class StudentRecyclerAdapter(
         studentAtEndPosition.indice = initPosition
 
         CoroutineScope(IO).launch {
-            repository.updateIndice(studentAtEndPosition.id, initPosition)
-            repository.updateIndice(studentAtInitPosition.id, endPosition)
+            repository.updateIndex(studentAtEndPosition.id, initPosition, {})
+            repository.updateIndex(studentAtInitPosition.id, endPosition, {})
         }
 
         Collections.swap(studentList, initPosition, endPosition)
