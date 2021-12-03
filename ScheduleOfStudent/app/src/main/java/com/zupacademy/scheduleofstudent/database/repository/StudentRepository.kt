@@ -104,9 +104,8 @@ class StudentRepository(
 
                     withContext(Main) {
                         print(student)
+                        liveDataOfStudent.value = student
                     }
-
-                    liveDataOfStudent.value = student
                 }
             }
 

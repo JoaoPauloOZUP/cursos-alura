@@ -6,24 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.StudentList">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/student_list_recycler_view"
+    <fragment
+        android:id="@+id/fragment"
+        android:tag="fragment_students"
+        android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/student_list_new_student_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_new_student"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_student_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
