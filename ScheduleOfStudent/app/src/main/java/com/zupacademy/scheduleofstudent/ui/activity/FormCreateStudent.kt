@@ -7,11 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import com.zupacademy.scheduleofstudent.R
-import com.zupacademy.scheduleofstudent.database.entity.Student
 import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
 import com.zupacademy.scheduleofstudent.ui.shared.CREATED_RESULT
 import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
-import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU
+import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU_SAVE
 
 class FormCreateStudent : AppCompatActivity() {
 
@@ -43,11 +42,11 @@ class FormCreateStudent : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val itemSelected = item.title as String
-        if(itemSelected == OPTION_MENU) {
+        if(itemSelected == OPTION_MENU_SAVE) {
             val student = createdStudent()
             setResult(
                 CREATED_RESULT,
-                Intent(this, StudentList::class.java)
+                Intent(this, StudentActivity::class.java)
                     .putExtra(EXTRA_STUDENT, student)
             )
         }

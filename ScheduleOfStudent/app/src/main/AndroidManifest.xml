@@ -20,7 +20,7 @@
             android:name=".ui.activity.FormCreateStudent"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.StudentList"
+            android:name=".ui.activity.StudentActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

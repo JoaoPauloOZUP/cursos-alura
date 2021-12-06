@@ -1,12 +1,12 @@
 package com.zupacademy.scheduleofstudent.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -31,6 +31,7 @@ class StudentListFragment : Fragment() {
         ItemTouchHelper(StudentItemTouchCallback(adapter))
     }
 
+    private val factory: StudentListViewModelFactory by inject()
     private val viewModel by lazy {
         val provider: ViewModelProvider = ViewModelProviders.of(this,  factory)
         provider.get(StudentListViewModel::class.java)
@@ -38,9 +39,10 @@ class StudentListFragment : Fragment() {
 
     private var _binding: FragmentStudentListBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var adapter: StudentRecyclerAdapter
     private val repository: StudentRepository by inject()
-    private val factory: StudentListViewModelFactory by inject()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentStudentListBinding.inflate(inflater, container, false)
@@ -64,10 +66,8 @@ class StudentListFragment : Fragment() {
 
     private fun configureFabOnclickListener() {
          binding.studentListNewStudentFab.setOnClickListener {
-            listenerActivity.startFormStudentActivity { studentRequest ->
-                viewModel.saveStudent(studentRequest, ::toast).observe(viewLifecycleOwner, { student ->
-                    adapter.save(student)
-                })
+            listenerActivity.startFormStudentFragment { studentRequest ->
+                viewModel.saveStudent(studentRequest, ::toast)
             }
         }
     }
@@ -75,10 +75,8 @@ class StudentListFragment : Fragment() {
     private fun configureOnItemClickListener() {
         val onItemClickListener = object : OnItemClickListener<Student>(){
             override fun onClick(item: Student, position: Int) {
-                listenerActivity.startFormStudentActivityWithExtra(item) { student ->
-                    viewModel.editStudent(student, ::toast).observe(viewLifecycleOwner, { student
-                        adapter.edit(student)
-                    })
+                listenerActivity.startFormStudentFragmentWithExtra(item) { student ->
+                    viewModel.editStudent(student, ::toast)
                 }
             }
         }
@@ -92,9 +90,14 @@ class StudentListFragment : Fragment() {
     private fun toast() {
         Toast.makeText(requireContext(), "Error your network", Toast.LENGTH_SHORT).show()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("DESTROY", "FRAGMENT DESTRUDI")
+    }
 }
 
 interface Listener {
-    fun startFormStudentActivity(callbackNewStudentFragment: (student: StudentRequest) -> Unit)
-    fun startFormStudentActivityWithExtra(extra: Student, callbackEditStudentFragment: (student: Student) -> Unit)
+    fun startFormStudentFragment(callbackNewStudentFragment: (student: StudentRequest) -> Unit)
+    fun startFormStudentFragmentWithExtra(extra: Student, callbackEditStudentFragment: (student: Student) -> Unit)
 }
