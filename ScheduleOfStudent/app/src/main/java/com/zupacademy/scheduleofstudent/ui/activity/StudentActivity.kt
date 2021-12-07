@@ -1,7 +1,7 @@
 package com.zupacademy.scheduleofstudent.ui.activity
 
-import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
@@ -17,8 +17,12 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
         private const val VIEW_STUDENT_LIST = "student_list"
         private const val VIEW_STUDENT_CREATE = "student_create"
         private const val VIEW_STUDENT_EDIT = "student_edit"
+        private const val ROOT_WIDTH_PIXELS_IN_PORTRAIT = 2148
     }
 
+    private val displayMetrics: DisplayMetrics by lazy {
+        resources.displayMetrics
+    }
     private lateinit var callbackNewStudentFragment: (student: StudentRequest) -> Unit
     private lateinit var callbackEditStudentFragment: (student: Student) -> Unit
 
@@ -41,7 +45,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
 
                 fragmentTransaction {
                     val container =
-                        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        if(displayMetrics.widthPixels > ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
                             R.id.activity_second_container
                         } else {
                             addToBackStack(null)
@@ -56,7 +60,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
     private fun startStudentListFragment() {
         fragmentTransaction {
             val container =
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if(displayMetrics.widthPixels >= ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
                     R.id.activity_primary_container
                 } else {
                     addToBackStack(null)
@@ -71,7 +75,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
 
         fragmentTransaction {
             val container =
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if(displayMetrics.widthPixels > ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
                     R.id.activity_second_container
                 } else {
                     addToBackStack(null)
@@ -90,7 +94,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
 
         fragmentTransaction {
             val container =
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if(displayMetrics.widthPixels >= ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
                     R.id.activity_second_container
                 } else {
                     addToBackStack(null)
