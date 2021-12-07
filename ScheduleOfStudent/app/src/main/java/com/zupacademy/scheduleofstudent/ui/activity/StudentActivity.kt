@@ -31,25 +31,25 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student)
         title = APPBAR_TITLE
-        if(savedInstanceState == null) {
-            startStudentListFragment()
-        } else {
-            supportFragmentManager.findFragmentByTag(VIEW_STUDENT_EDIT)?.let { fragment ->
-                val arguments = fragment.arguments
-                val newFragment = StudentFormEditFragment()
-                newFragment.arguments = arguments
-
-                fragmentTransaction {
-                    remove(fragment)
-                }
-                supportFragmentManager.popBackStack()
-
-                fragmentTransaction {
-                    val container = verifyContainer()
-                    replace(container, newFragment, VIEW_STUDENT_EDIT)
-                }
-            }
-        }
+//        if(savedInstanceState == null) {
+//            startStudentListFragment()
+//        } else {
+//            supportFragmentManager.findFragmentByTag(VIEW_STUDENT_EDIT)?.let { fragment ->
+//                val arguments = fragment.arguments
+//                val newFragment = StudentFormEditFragment()
+//                newFragment.arguments = arguments
+//
+//                fragmentTransaction {
+//                    remove(fragment)
+//                }
+//                supportFragmentManager.popBackStack()
+//
+//                fragmentTransaction {
+//                    val container = verifyContainer()
+//                    replace(container, newFragment, VIEW_STUDENT_EDIT)
+//                }
+//            }
+//        }
     }
 
     private fun startStudentListFragment() {
