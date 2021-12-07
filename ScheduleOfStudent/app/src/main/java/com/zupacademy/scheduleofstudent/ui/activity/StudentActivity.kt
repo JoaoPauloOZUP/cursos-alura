@@ -1,5 +1,6 @@
 package com.zupacademy.scheduleofstudent.ui.activity
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.zupacademy.scheduleofstudent.R
@@ -13,6 +14,9 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
 
     companion object {
         private const val APPBAR_TITLE = "Student list"
+        private const val VIEW_STUDENT_LIST = "student_list"
+        private const val VIEW_STUDENT_CREATE = "student_create"
+        private const val VIEW_STUDENT_EDIT = "student_edit"
     }
 
     private lateinit var callbackNewStudentFragment: (student: StudentRequest) -> Unit
@@ -20,16 +24,45 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_student_list)
+        setContentView(R.layout.activity_student)
         title = APPBAR_TITLE
         if(savedInstanceState == null) {
             startStudentListFragment()
+        } else {
+            supportFragmentManager.findFragmentByTag(VIEW_STUDENT_EDIT)?.let { fragment ->
+                val arguments = fragment.arguments
+                val newFragment = StudentFormEditFragment()
+                newFragment.arguments = arguments
+
+                fragmentTransaction {
+                    remove(fragment)
+                }
+                supportFragmentManager.popBackStack()
+
+                fragmentTransaction {
+                    val container =
+                        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            R.id.activity_second_container
+                        } else {
+                            addToBackStack(null)
+                            R.id.activity_main_container
+                        }
+                    replace(container, newFragment, VIEW_STUDENT_EDIT)
+                }
+            }
         }
     }
 
     private fun startStudentListFragment() {
         fragmentTransaction {
-            replace(R.id.activity_main_container, StudentListFragment())
+            val container =
+                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    R.id.activity_primary_container
+                } else {
+                    addToBackStack(null)
+                    R.id.activity_main_container
+                }
+            replace(container, StudentListFragment(), VIEW_STUDENT_LIST)
         }
     }
 
@@ -37,8 +70,14 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
         val fragment = StudentFormCreateFragment()
 
         fragmentTransaction {
-            replace(R.id.activity_main_container, fragment)
-            addToBackStack(null)
+            val container =
+                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    R.id.activity_second_container
+                } else {
+                    addToBackStack(null)
+                    R.id.activity_main_container
+                }
+            replace(container, fragment, VIEW_STUDENT_CREATE)
         }
     }
 
@@ -50,8 +89,14 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
         fragment.arguments = data
 
         fragmentTransaction {
-            replace(R.id.activity_main_container, fragment)
-            addToBackStack(null)
+            val container =
+                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    R.id.activity_second_container
+                } else {
+                    addToBackStack(null)
+                    R.id.activity_main_container
+                }
+            replace(container, fragment, VIEW_STUDENT_EDIT)
         }
     }
 

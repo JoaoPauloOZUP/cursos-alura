@@ -24,7 +24,7 @@ class FormCreateStudent : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_form_create_student)
+        setContentView(R.layout.fragment_student_form)
         title = APPBAR_TITLE
         initializeAttributesOnView()
     }

@@ -5,13 +5,13 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
-import com.zupacademy.scheduleofstudent.databinding.ActivityFormCreateStudentBinding
+import com.zupacademy.scheduleofstudent.databinding.FragmentStudentFormBinding
 import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
 import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU_SAVE
 
 class StudentFormEditFragment : Fragment() {
 
-    private var _binding: ActivityFormCreateStudentBinding? = null
+    private var _binding: FragmentStudentFormBinding? = null
     private val binding get() = _binding!!
 
     private val studentEditExtra: StudentEditExtra by lazy {
@@ -28,7 +28,7 @@ class StudentFormEditFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = ActivityFormCreateStudentBinding.inflate(inflater, container, false)
+        _binding = FragmentStudentFormBinding.inflate(inflater, container, false)
         return binding.root
     }
 

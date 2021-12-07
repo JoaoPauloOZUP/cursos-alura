@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-anydpi/ic_new_student.xml" value="0.2984375" />
+        <entry key="app/src/main/res/layout-land/activity_student.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_form_create_student.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17980072463768115" />
+        <entry key="app/src/main/res/layout/activity_student.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/activity_student_list.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_student_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_student_list_res.xml" value="0.21014492753623187" />
