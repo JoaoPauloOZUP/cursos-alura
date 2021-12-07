@@ -55,6 +55,10 @@ class StudentListFragment : Fragment() {
         configureAdapter()
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     private fun configureAdapter() {
         viewModel.findAllStudents(::toast).observe(viewLifecycleOwner, { studentList ->
             adapter = StudentRecyclerAdapter(requireContext(), studentList.toMutableList(), repository)

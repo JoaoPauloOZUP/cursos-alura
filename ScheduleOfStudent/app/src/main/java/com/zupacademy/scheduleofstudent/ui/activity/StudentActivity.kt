@@ -3,6 +3,7 @@ package com.zupacademy.scheduleofstudent.ui.activity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
 import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
@@ -44,13 +45,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
                 supportFragmentManager.popBackStack()
 
                 fragmentTransaction {
-                    val container =
-                        if(displayMetrics.widthPixels > ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
-                            R.id.activity_second_container
-                        } else {
-                            addToBackStack(null)
-                            R.id.activity_main_container
-                        }
+                    val container = verifyContainer()
                     replace(container, newFragment, VIEW_STUDENT_EDIT)
                 }
             }
@@ -59,13 +54,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
 
     private fun startStudentListFragment() {
         fragmentTransaction {
-            val container =
-                if(displayMetrics.widthPixels >= ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
-                    R.id.activity_primary_container
-                } else {
-                    addToBackStack(null)
-                    R.id.activity_main_container
-                }
+            val container = verifyContainer()
             replace(container, StudentListFragment(), VIEW_STUDENT_LIST)
         }
     }
@@ -74,13 +63,7 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
         val fragment = StudentFormCreateFragment()
 
         fragmentTransaction {
-            val container =
-                if(displayMetrics.widthPixels > ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
-                    R.id.activity_second_container
-                } else {
-                    addToBackStack(null)
-                    R.id.activity_main_container
-                }
+            val container = verifyContainer()
             replace(container, fragment, VIEW_STUDENT_CREATE)
         }
     }
@@ -93,15 +76,17 @@ class StudentActivity : AppCompatActivity(), Listener, StudentEditExtra, Student
         fragment.arguments = data
 
         fragmentTransaction {
-            val container =
-                if(displayMetrics.widthPixels >= ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
-                    R.id.activity_second_container
-                } else {
-                    addToBackStack(null)
-                    R.id.activity_main_container
-                }
+            val container = verifyContainer()
             replace(container, fragment, VIEW_STUDENT_EDIT)
         }
+    }
+
+    private fun FragmentTransaction.verifyContainer(): Int {
+        if(displayMetrics.widthPixels > ROOT_WIDTH_PIXELS_IN_PORTRAIT) {
+            return R.id.activity_second_container
+        }
+        addToBackStack(null)
+        return R.id.activity_main_container
     }
 
     override fun startFormStudentFragment(callbackNewStudentFragment: (student: StudentRequest) -> Unit) {

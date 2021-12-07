@@ -17,7 +17,7 @@ import java.util.*
 
 class StudentRecyclerAdapter(
     private val context: Context,
-    private val studentList: MutableList<Student>,
+    val studentList: MutableList<Student>,
     private val repository: StudentRepository
 ) : RecyclerView.Adapter<StudentRecyclerAdapter.ViewHolder>() {
 
@@ -80,6 +80,10 @@ class StudentRecyclerAdapter(
         val position = student.indice!!
         studentList[position] = student
         notifyItemChanged(position)
+    }
+
+    fun update() {
+        notifyDataSetChanged()
     }
 
     fun remove(position: Int) {
