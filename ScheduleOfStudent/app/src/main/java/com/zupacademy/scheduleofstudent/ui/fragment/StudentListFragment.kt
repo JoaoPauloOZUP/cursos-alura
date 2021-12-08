@@ -1,7 +1,6 @@
 package com.zupacademy.scheduleofstudent.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,36 +8,39 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
 import com.zupacademy.scheduleofstudent.database.repository.StudentRepository
 import com.zupacademy.scheduleofstudent.databinding.FragmentStudentListBinding
-import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
 import com.zupacademy.scheduleofstudent.ui.adapter.StudentRecyclerAdapter
 import com.zupacademy.scheduleofstudent.ui.helper.StudentItemTouchCallback
 import com.zupacademy.scheduleofstudent.ui.listerner.OnItemClickListener
+import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
 import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
 import org.koin.android.ext.android.inject
 
 class StudentListFragment : Fragment() {
 
-    private val listenerActivity: Listener by lazy {
-         activity as Listener
-    }
-
     private val itemTouchHelper: ItemTouchHelper by lazy {
         ItemTouchHelper(StudentItemTouchCallback(adapter))
     }
 
+    private var _binding: FragmentStudentListBinding? = null
+    private val binding get() = _binding!!
+
+    private val navigationController: NavController by lazy {
+        findNavController()
+    }
     private val factory: StudentListViewModelFactory by inject()
+
     private val viewModel by lazy {
         val provider: ViewModelProvider = ViewModelProviders.of(this,  factory)
         provider.get(StudentListViewModel::class.java)
     }
-
-    private var _binding: FragmentStudentListBinding? = null
-    private val binding get() = _binding!!
 
     private lateinit var adapter: StudentRecyclerAdapter
     private val repository: StudentRepository by inject()
@@ -55,10 +57,6 @@ class StudentListFragment : Fragment() {
         configureAdapter()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     private fun configureAdapter() {
         viewModel.findAllStudents(::toast).observe(viewLifecycleOwner, { studentList ->
             adapter = StudentRecyclerAdapter(requireContext(), studentList.toMutableList(), repository)
@@ -70,18 +68,16 @@ class StudentListFragment : Fragment() {
 
     private fun configureFabOnclickListener() {
          binding.studentListNewStudentFab.setOnClickListener {
-            listenerActivity.startFormStudentFragment { studentRequest ->
-                viewModel.saveStudent(studentRequest, ::toast)
-            }
+            navigationController.navigate(R.id.action_StudentList_to_StudentCreate)
         }
     }
 
     private fun configureOnItemClickListener() {
         val onItemClickListener = object : OnItemClickListener<Student>(){
-            override fun onClick(item: Student, position: Int) {
-                listenerActivity.startFormStudentFragmentWithExtra(item) { student ->
-                    viewModel.editStudent(student, ::toast)
-                }
+            override fun onClick(student: Student, position: Int) {
+                val data = Bundle()
+                data.putSerializable(EXTRA_STUDENT, student)
+                navigationController.navigate(R.id.action_StudentList_to_StudentEdit, data)
             }
         }
         adapter.setOnItemClickListener(onItemClickListener)
@@ -94,14 +90,4 @@ class StudentListFragment : Fragment() {
     private fun toast() {
         Toast.makeText(requireContext(), "Error your network", Toast.LENGTH_SHORT).show()
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.i("DESTROY", "FRAGMENT DESTRUDI")
-    }
-}
-
-interface Listener {
-    fun startFormStudentFragment(callbackNewStudentFragment: (student: StudentRequest) -> Unit)
-    fun startFormStudentFragmentWithExtra(extra: Student, callbackEditStudentFragment: (student: Student) -> Unit)
 }

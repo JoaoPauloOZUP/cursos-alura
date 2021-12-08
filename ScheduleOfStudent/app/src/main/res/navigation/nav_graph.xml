@@ -3,11 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/blankFragment">
+    app:startDestination="@id/StudentList">
 
     <fragment
-        android:id="@+id/blankFragment"
-        android:name="com.zupacademy.scheduleofstudent.BlankFragment"
-        android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" />
+        android:id="@+id/StudentList"
+        tools:layout="@layout/fragment_student_list"
+        android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentListFragment"
+        android:label="Student List" >
+        <action
+            android:id="@+id/action_StudentList_to_StudentEdit"
+            app:destination="@id/StudentEdit" />
+        <action
+            android:id="@+id/action_StudentList_to_StudentCreate"
+            app:destination="@id/StudentCreate" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/StudentEdit"
+        android:label="Student Edit"
+        tools:layout="@layout/fragment_student_form"
+        android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentFormEditFragment">
+        <action
+            android:id="@+id/action_StudentEdit_to_StudentList"
+            app:destination="@id/StudentList" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/StudentCreate"
+        android:label="Student Create"
+        tools:layout="@layout/fragment_student_form"
+        android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentFormCreateFragment">
+        <action
+            android:id="@+id/action_StudentCreate_to_StudentList"
+            app:destination="@id/StudentList" />
+    </fragment>
 </navigation>
