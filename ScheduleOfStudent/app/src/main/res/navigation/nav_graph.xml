@@ -25,7 +25,9 @@
         android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentFormEditFragment">
         <action
             android:id="@+id/action_StudentEdit_to_StudentList"
-            app:destination="@id/StudentList" />
+            app:destination="@id/StudentList"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -35,6 +37,8 @@
         android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentFormCreateFragment">
         <action
             android:id="@+id/action_StudentCreate_to_StudentList"
-            app:destination="@id/StudentList" />
+            app:destination="@id/StudentList"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

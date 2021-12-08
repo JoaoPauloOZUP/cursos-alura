@@ -62,7 +62,7 @@ class StudentFormEditFragment : Fragment() {
         if(itemSelected == OPTION_MENU_SAVE) {
             studentEdit()
             viewModel.editStudent(student, ::toast)
-            navigationController.popBackStack()
+            navigationController.navigate(R.id.action_StudentEdit_to_StudentList)
         }
         return super.onOptionsItemSelected(item)
     }
