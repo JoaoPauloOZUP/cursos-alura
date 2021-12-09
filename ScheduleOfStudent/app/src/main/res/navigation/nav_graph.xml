@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/StudentList">
+    app:startDestination="@id/StudentLogin">
 
     <fragment
         android:id="@+id/StudentList"
@@ -19,6 +19,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/StudentLogin"
+        tools:layout="@layout/fragment_student_login"
+        android:name="com.zupacademy.scheduleofstudent.ui.fragment.StudentLoginFragment"
+        android:label="Student Login"
+        >
+        <action
+            android:id="@+id/action_StudentLogin_to_StudentList"
+            app:destination="@id/StudentList" />
+    </fragment>
+
+    <fragment
         android:id="@+id/StudentEdit"
         android:label="Student Edit"
         tools:layout="@layout/fragment_student_form"
@@ -26,7 +37,7 @@
         <action
             android:id="@+id/action_StudentEdit_to_StudentList"
             app:destination="@id/StudentList"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/StudentList"
             app:popUpToInclusive="true" />
         <argument
             android:name="student"
@@ -41,7 +52,7 @@
         <action
             android:id="@+id/action_StudentCreate_to_StudentList"
             app:destination="@id/StudentList"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/StudentList"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

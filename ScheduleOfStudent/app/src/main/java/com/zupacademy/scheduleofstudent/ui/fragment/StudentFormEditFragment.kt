@@ -25,7 +25,6 @@ class StudentFormEditFragment : Fragment() {
     private val navArguments by navArgs<StudentFormEditFragmentArgs>()
 
     private val student: Student by lazy {
-//        arguments?.getSerializable(EXTRA_STUDENT) as Student
         navArguments.student
     }
 
