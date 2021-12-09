@@ -28,6 +28,9 @@
             app:destination="@id/StudentList"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="student"
+            app:argType="com.zupacademy.scheduleofstudent.database.entity.Student" />
     </fragment>
 
     <fragment

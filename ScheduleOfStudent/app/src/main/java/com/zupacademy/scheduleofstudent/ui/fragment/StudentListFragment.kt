@@ -75,9 +75,8 @@ class StudentListFragment : Fragment() {
     private fun configureOnItemClickListener() {
         val onItemClickListener = object : OnItemClickListener<Student>(){
             override fun onClick(student: Student, position: Int) {
-                val data = Bundle()
-                data.putSerializable(EXTRA_STUDENT, student)
-                navigationController.navigate(R.id.action_StudentList_to_StudentEdit, data)
+                val directions = StudentListFragmentDirections.actionStudentListToStudentEdit(student)
+                navigationController.navigate(directions)
             }
         }
         adapter.setOnItemClickListener(onItemClickListener)

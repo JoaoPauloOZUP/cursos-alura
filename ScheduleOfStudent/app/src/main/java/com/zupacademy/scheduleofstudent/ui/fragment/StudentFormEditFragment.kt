@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
 import com.zupacademy.scheduleofstudent.databinding.FragmentStudentFormBinding
-import com.zupacademy.scheduleofstudent.ui.shared.EXTRA_STUDENT
 import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU_SAVE
 import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
@@ -22,8 +22,11 @@ class StudentFormEditFragment : Fragment() {
     private var _binding: FragmentStudentFormBinding? = null
     private val binding get() = _binding!!
 
+    private val navArguments by navArgs<StudentFormEditFragmentArgs>()
+
     private val student: Student by lazy {
-        arguments?.getSerializable(EXTRA_STUDENT) as Student
+//        arguments?.getSerializable(EXTRA_STUDENT) as Student
+        navArguments.student
     }
 
     private val navigationController: NavController by lazy {
