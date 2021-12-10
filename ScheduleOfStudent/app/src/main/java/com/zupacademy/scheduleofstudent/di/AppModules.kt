@@ -1,5 +1,7 @@
 package com.zupacademy.scheduleofstudent.di
 
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
@@ -7,6 +9,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zupacademy.scheduleofstudent.database.Database
 import com.zupacademy.scheduleofstudent.database.dao.StudentDao
+import com.zupacademy.scheduleofstudent.database.repository.LoginRepository
 import com.zupacademy.scheduleofstudent.database.repository.StudentRepository
 import com.zupacademy.scheduleofstudent.retrofit.StudentRetrofit
 import com.zupacademy.scheduleofstudent.retrofit.service.StudentService
@@ -55,5 +58,13 @@ val appModules = module {
 
     single<StudentListViewModelFactory> {
         StudentListViewModelFactory(get())
+    }
+
+    single<SharedPreferences> {
+        PreferenceManager.getDefaultSharedPreferences(get())
+    }
+
+    single<LoginRepository> {
+        LoginRepository(get())
     }
 }
