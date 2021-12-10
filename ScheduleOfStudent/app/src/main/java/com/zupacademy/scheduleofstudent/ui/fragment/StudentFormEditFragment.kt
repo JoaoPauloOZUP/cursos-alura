@@ -11,13 +11,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zupacademy.scheduleofstudent.R
 import com.zupacademy.scheduleofstudent.database.entity.Student
+import com.zupacademy.scheduleofstudent.database.repository.LoginRepository
 import com.zupacademy.scheduleofstudent.databinding.FragmentStudentFormBinding
 import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU_SAVE
+import com.zupacademy.scheduleofstudent.ui.viewmodel.LoginViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
 import org.koin.android.ext.android.inject
 
-class StudentFormEditFragment : Fragment() {
+class StudentFormEditFragment : BaseFragment() {
 
     private var _binding: FragmentStudentFormBinding? = null
     private val binding get() = _binding!!
@@ -40,7 +42,6 @@ class StudentFormEditFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,18 +55,18 @@ class StudentFormEditFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.activity_student_form_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemSelected = item.title as String
+        val itemSelected = item.title
         if(itemSelected == OPTION_MENU_SAVE) {
             studentEdit()
             viewModel.editStudent(student, ::toast)
             navigationController.navigate(R.id.action_StudentEdit_to_StudentList)
         }
+
         return super.onOptionsItemSelected(item)
     }
 

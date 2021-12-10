@@ -9,14 +9,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.zupacademy.scheduleofstudent.R
+import com.zupacademy.scheduleofstudent.database.repository.LoginRepository
 import com.zupacademy.scheduleofstudent.databinding.FragmentStudentFormBinding
 import com.zupacademy.scheduleofstudent.retrofit.service.dto.StudentRequest
 import com.zupacademy.scheduleofstudent.ui.shared.OPTION_MENU_SAVE
+import com.zupacademy.scheduleofstudent.ui.viewmodel.LoginViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
 import org.koin.android.ext.android.inject
 
-class StudentFormCreateFragment : Fragment() {
+class StudentFormCreateFragment : BaseFragment() {
 
     private var _binding: FragmentStudentFormBinding? = null
     private val binding get() = _binding!!
@@ -33,7 +35,6 @@ class StudentFormCreateFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,12 +48,13 @@ class StudentFormCreateFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemSelected = item.title as String
+        val itemSelected = item.title
         if(itemSelected == OPTION_MENU_SAVE) {
             val studentRequest = createdStudent()
             viewModel.saveStudent(studentRequest, ::toast)
             navigationController.popBackStack()
         }
+
         return super.onOptionsItemSelected(item)
     }
 

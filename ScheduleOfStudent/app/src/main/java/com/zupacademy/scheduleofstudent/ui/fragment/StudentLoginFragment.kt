@@ -31,9 +31,6 @@ class StudentLoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(loginViewModel.isLogged()) {
-                navigationController.navigate(R.id.action_StudentLogin_to_StudentList)
-        }
     }
 
     override fun onCreateView(

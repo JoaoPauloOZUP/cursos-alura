@@ -11,6 +11,8 @@ class LoginViewModel(
 
     fun isLogged(): Boolean = repository.isLogged()
 
+    fun isNotLogged(): Boolean = !isLogged()
+
     fun logout() = repository.logout()
 
 }

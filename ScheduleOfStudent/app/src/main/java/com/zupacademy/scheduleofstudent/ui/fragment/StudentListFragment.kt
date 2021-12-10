@@ -23,7 +23,7 @@ import com.zupacademy.scheduleofstudent.ui.viewmodel.StudentListViewModel
 import com.zupacademy.scheduleofstudent.ui.viewmodel.factory.StudentListViewModelFactory
 import org.koin.android.ext.android.inject
 
-class StudentListFragment : Fragment() {
+class StudentListFragment : BaseFragment() {
 
     private val itemTouchHelper: ItemTouchHelper by lazy {
         ItemTouchHelper(StudentItemTouchCallback(adapter))
@@ -36,7 +36,7 @@ class StudentListFragment : Fragment() {
         findNavController()
     }
 
-    private val loginRepository: LoginRepository by inject<LoginRepository>()
+    private val loginRepository: LoginRepository by inject()
     private val loginViewModel: LoginViewModel by lazy {
         LoginViewModel(loginRepository)
     }
@@ -52,7 +52,9 @@ class StudentListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        if(loginViewModel.isNotLogged()) {
+            navigationController.navigate(R.id.action_global_StudentLogin)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -64,19 +66,6 @@ class StudentListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         configureFabOnclickListener()
         configureAdapter()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.student_logout_application, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.title == "Logout") {
-            loginViewModel.logout()
-            navigationController.navigate(R.id.action_StudentList_to_StudentLogin)
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun configureAdapter() {
