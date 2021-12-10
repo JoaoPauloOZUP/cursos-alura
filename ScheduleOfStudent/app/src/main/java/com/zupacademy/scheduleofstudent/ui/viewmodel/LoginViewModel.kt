@@ -7,9 +7,10 @@ class LoginViewModel(
     private val repository: LoginRepository
 ) : ViewModel() {
 
-    fun login() {
-        repository.singIn()
-    }
+    fun login() = repository.singIn()
 
     fun isLogged(): Boolean = repository.isLogged()
+
+    fun logout() = repository.logout()
+
 }

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_StudentList_to_StudentCreate"
             app:destination="@id/StudentCreate" />
+        <action
+            android:id="@+id/action_StudentList_to_StudentLogin"
+            app:destination="@id/StudentLogin" />
     </fragment>
 
     <fragment
