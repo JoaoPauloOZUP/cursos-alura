@@ -9,7 +9,7 @@ import com.zupacademy.scheduleofstudent.R
 class StudentActivity : AppCompatActivity() {
 
     private val navigationController: NavController by lazy {
-        findNavController(R.id.activity_student_list)
+        findNavController(R.id.nav_host_student)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
